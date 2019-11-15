@@ -1,0 +1,4 @@
+[D-BUS Service]
+Name=com.lar.service.can
+Exec=/usr/bin/candaemon
+User=root

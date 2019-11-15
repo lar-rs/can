@@ -1,0 +1,8 @@
+# @PACKAGE@ starter
+start on (filesystem
+          and started dbus)
+stop on runlevel [016]
+
+script
+	exec @prefix@/bin/@PACKAGE@
+end script

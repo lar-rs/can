@@ -1,0 +1,95 @@
+[package]
+name = "can4rs"
+version = "0.0.1"
+authors = ["smolkov <asmolkov@lar.com>"]
+edition = "2018"
+description = "canbus can4linux pcan binding api"
+keywords = ["wqa", "system","can", "can4linux"]
+categories = ["can", "api" ]
+repository = "https://github.com/lar-rs"
+readme = "README.md"
+license = "Apache-2.0 OR MIT"
+build = "build.rs"
+# http-service-mock = "0.2.0"
+
+# [patch.crates-io]
+# http-service = { git = "https://github.com/rustasync/http-service", branch = "master" }
+# http-service-hyper = { git = "https://github.com/rustasync/http-service", branch = "master" }
+# http-service-mock = { git = "https://github.com/rustasync/http-service", branch = "master" }
+
+
+
+[badges]
+maintenance = { status = "experimental" }
+travis-ci = { repository = "lar-rs/can4rs", branch = "master"}
+
+
+[dependencies]
+structopt = { version = "0.3.3" }
+clap-md = "*"
+log = "0.4.8"
+log4rs = "0.8.3"
+# ron = "0.5.1"
+# Serializer
+serde_json = "1.0"
+serde = {version = "1.0.94", features = ["derive"]}
+serde_derive = "1.0.94"
+
+
+
+lazy_static = "1.3.0"
+# socketcan = "1.7.0"
+failure = "0.1.5"
+# futures-preview = { version = "0.3.0-alpha.17"}
+fs2 = "0.4.3"
+heapless = "0.5.0-alpha.2"
+
+# scopeguard = "1.0.0"
+# Jsonrpc
+# jsonrpc-core = "12.1.0"
+# jsonrpc = "0.11.0"
+# jsonrpc-derive = "12.1.0"
+# jsonrpc-core-client = "12.1.0"
+# jsonrpc-http-server = "12.1.0"
+# bitvec = "0.14.0"
+# paw-structopt = "1.0.0"
+# jsonrpc-pubsub = "12.1.0"
+# jsonrpc-ws-server = "12.1.0"
+# jsonrpc-ipc-server = "12.1.0"
+# jsonrpc-tcp-server = "12.1.0"
+# ansi_term = "0.12.1"
+# quicli = "0.4.0"
+# atty = "0.2.13"
+# rand = "0.7.0"
+# rocket_contrib = "0.4.2"
+# rocket_prometheus = "0.3.0"
+# tarpc = "0.18.0"
+# runtime = "0.3.0-alpha.6"
+# http = "0.1.17"
+# tide = "0.2.0"
+# paw = "1.0.0"
+# tide = { git = "https://github.com/rustasync/tide.git", features = ["hyper"]}
+
+
+# tide = { git ="https://github.com/rustasync/tide.git"}
+# bitflags = "1.1.0"
+
+[build-dependencies]
+cc = "1.0"
+
+# dpkg package
+# [package.metadata.deb]
+# maintainer = "Smolkov <asmolkov@lar.com>"
+# copyright = "2019, LAR"
+# depends = "$auto"
+# conf-files = ["/usr/local/etc/cantorpc.toml", "/etc/systemd/system/cantorpc.service"]
+# extended-description = """\
+# Canbus binding.\
+# """
+# section = "admin"
+# priority = "optional"
+# assets = [
+#     ["target/release/cantorpc", "/usr/local/bin/", "755"],
+#     ["assets/cantorpc.toml", "/usr/local/etc/", "644"],
+#     ["assets/cantorpc.service", "/etc/systemd/system/", "644"],
+# ]

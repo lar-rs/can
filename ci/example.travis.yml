@@ -1,0 +1,29 @@
+language: rust
+cache: cargo
+env:
+  - RUST_LOG=areweasyncyet=debug
+
+script:
+  - cargo run --verbose
+  - tar cvf out.tar.xz out
+
+deploy:
+  - provider: pages
+    skip-cleanup: true
+    github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+    keep-history: true
+    local-dir: target/doc
+    branch: gh-pages
+    on:
+        branch: master
+        condition: $DEPLOY_DOCS = 1
+
+  - provider: releases
+    api-token: $GITHUB_TOKEN
+    skip_cleanup: true
+    file: out.tar.xz
+    on:
+      tags: true
+
+
+provider: pages

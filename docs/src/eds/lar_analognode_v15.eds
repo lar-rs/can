@@ -1,0 +1,1046 @@
+[FileInfo]
+CreatedBy=LAR AG
+ModifiedBy=LAR AG
+Description=LAr Analognode v15
+CreationTime=11:31AM
+CreationDate=03-04-2014
+ModificationTime=11:31AM
+ModificationDate=03-04-2014
+FileName=lar_analognode_v15.eds
+FileVersion=1
+FileRevision=1
+EDSVersion=1
+TypeInfo=NodeAnalogObject
+Name=Analog
+
+[DeviceInfo]
+VendorName=ebm papst
+VendorNumber=0x0000027D
+ProductName=ECI K5
+ProductNumber=0
+RevisionNumber=0
+OrderCode=0
+BaudRate_10=1
+BaudRate_20=1
+BaudRate_50=1
+BaudRate_125=1
+BaudRate_250=1
+BaudRate_500=1
+BaudRate_800=0
+BaudRate_1000=1
+SimpleBootUpMaster=0
+SimpleBootUpSlave=1
+Granularity=8
+DynamicChannelsSupported=0
+CompactPDO=0
+GroupMessaging=0
+NrOfRXPDO=4
+NrOfTXPDO=4
+LSS_Supported=1
+
+[DummyUsage]
+Dummy0001=0
+Dummy0002=0
+Dummy0003=0
+Dummy0004=0
+Dummy0005=0
+Dummy0006=0
+Dummy0007=0
+
+[Comments]
+Lines=0
+
+[MandatoryObjects]
+SupportedObjects=3
+1=0x1000
+2=0x1001
+3=0x1018
+
+[1000]
+ParameterName=Device Type
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=0x00040001
+PDOMapping=0
+
+[1001]
+ParameterName=Error Register 8
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[1018]
+ParameterName=Identity Object
+ObjectType=0x9
+SubNumber=5
+
+[1018sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=4
+PDOMapping=0
+
+[1018sub1]
+ParameterName=VendorID
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=0x12345678
+PDOMapping=0
+
+[1018sub2]
+ParameterName=Product-Code
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=0x00010000
+PDOMapping=0
+
+[1018sub3]
+ParameterName=Revision Number
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=0x00012000
+PDOMapping=0
+
+[1018sub4]
+ParameterName=Serial Number
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[OptionalObjects]
+SupportedObjects=28
+1=0x1003
+2=0x1005
+3=0x100C
+4=0x100D
+5=0x1010
+6=0x1011
+7=0x1029
+8=0x6000
+9=0x6010
+10=0x6020
+11=0x6021
+12=0x6022
+13=0x6023
+14=0x6100
+15=0x6101
+16=0x6102
+17=0x6103
+18=0x6104
+19=0x6110
+20=0x6111
+21=0x6112
+22=0x6113
+23=0x6114
+24=0x6120
+25=0x6121
+26=0x6122
+27=0x6123
+28=0x6130
+
+[1003]
+ParameterName=Error Register 16
+ObjectType=0x7
+DataType=0x0009
+AccessType=ro
+DefaultValue=-
+PDOMapping=0
+
+[1005]
+ParameterName=COB-ID SYNC
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=-128
+PDOMapping=0
+
+[100C]
+ParameterName=Guard Time
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[100D]
+ParameterName=Guard Life Time
+ObjectType=0x7
+DataType=0x0002
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1010]
+ParameterName=Write parameters to EEProm
+ObjectType=0x7
+DataType=0x0009
+AccessType=rw
+DefaultValue=-
+PDOMapping=0
+
+[1011]
+ParameterName=Reload default Parameters
+ObjectType=0x7
+DataType=0x0009
+AccessType=rw
+DefaultValue=-
+PDOMapping=0
+
+[1029]
+ParameterName=1029 Errorbehaviour
+ObjectType=0x7
+DataType=0x0002
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6000]
+ParameterName=Uart 0
+ObjectType=0x8
+SubNumber=4
+
+[6000sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[6000sub1]
+ParameterName=Uart Daten
+ObjectType=0x7
+DataType=0x0009
+AccessType=rw
+DefaultValue=-
+PDOMapping=0
+
+[6000sub2]
+ParameterName=RX-Length
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[6000sub3]
+ParameterName=TX-Length
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=79
+PDOMapping=0
+
+[6010]
+ParameterName=Uart 1
+ObjectType=0x8
+SubNumber=4
+
+[6010sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[6010sub1]
+ParameterName=Uart Daten
+ObjectType=0x7
+DataType=0x0009
+AccessType=rw
+DefaultValue=-
+PDOMapping=0
+
+[6010sub2]
+ParameterName=RX-Length
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[6010sub3]
+ParameterName=TX-Length
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=79
+PDOMapping=0
+
+[6020]
+ParameterName=Temperaturen
+ObjectType=0x8
+SubNumber=6
+
+[6020sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=5
+PDOMapping=0
+
+[6020sub1]
+ParameterName=ext Temperature 1
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=65376
+PDOMapping=0
+
+[6020sub2]
+ParameterName=ext Temperature 2
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=65376
+PDOMapping=0
+
+[6020sub3]
+ParameterName=ext Temperature 3
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=65376
+PDOMapping=0
+
+[6020sub4]
+ParameterName=int Temperature
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue== 1/10 grad C
+PDOMapping=0
+
+[6020sub5]
+ParameterName=geregelte Spannung
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=~ 500
+PDOMapping=0
+
+[6021]
+ParameterName=AD - Values
+ObjectType=0x8
+SubNumber=6
+
+[6021sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=5
+PDOMapping=0
+
+[6021sub1]
+ParameterName=ext Temperature 1
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=1021
+PDOMapping=0
+
+[6021sub2]
+ParameterName=ext Temperature 2
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=1021
+PDOMapping=0
+
+[6021sub3]
+ParameterName=ext Temperature 3
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=1021
+PDOMapping=0
+
+[6021sub4]
+ParameterName=int Temperature
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue== 1/10 grad C
+PDOMapping=0
+
+[6021sub5]
+ParameterName=geregelte Spannung
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=~ 220
+PDOMapping=0
+
+[6022]
+ParameterName=Konstant K0
+ObjectType=0x8
+SubNumber=6
+
+[6022sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=5
+PDOMapping=0
+
+[6022sub1]
+ParameterName=ext Temperature 1
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=774
+PDOMapping=0
+
+[6022sub2]
+ParameterName=ext Temperature 2
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=774
+PDOMapping=0
+
+[6022sub3]
+ParameterName=ext Temperature 3
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=774
+PDOMapping=0
+
+[6022sub4]
+ParameterName=int Temperature
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=774
+PDOMapping=0
+
+[6022sub5]
+ParameterName=geregelte Spannung
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6023]
+ParameterName=Konstant K1
+ObjectType=0x8
+SubNumber=6
+
+[6023sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=rw
+DefaultValue=5
+PDOMapping=0
+
+[6023sub1]
+ParameterName=ext Temperature 1
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=58040
+PDOMapping=0
+
+[6023sub2]
+ParameterName=ext Temperature 2
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=58040
+PDOMapping=0
+
+[6023sub3]
+ParameterName=ext Temperature 3
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=58040
+PDOMapping=0
+
+[6023sub4]
+ParameterName=int Temperature
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=58040
+PDOMapping=0
+
+[6023sub5]
+ParameterName=geregelte Spannung
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=27940
+PDOMapping=0
+
+[6100]
+ParameterName=4 x 12Bit AD-Conversion
+ObjectType=0x8
+SubNumber=5
+
+[6100sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=4
+PDOMapping=0
+
+[6100sub1]
+ParameterName=Channel 1
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=8082
+PDOMapping=0
+
+[6100sub2]
+ParameterName=Channel 2
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=7789
+PDOMapping=0
+
+[6100sub3]
+ParameterName=Channel 3
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=3604
+PDOMapping=0
+
+[6100sub4]
+ParameterName=Channel 4
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=2502
+PDOMapping=0
+
+[6101]
+ParameterName=AD - Values
+ObjectType=0x8
+SubNumber=5
+
+[6101sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=4
+PDOMapping=0
+
+[6101sub1]
+ParameterName=Channel 1
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=3262
+PDOMapping=0
+
+[6101sub2]
+ParameterName=Channel 2
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=3000
+PDOMapping=0
+
+[6101sub3]
+ParameterName=Channel 3
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=1500
+PDOMapping=0
+
+[6101sub4]
+ParameterName=Channel 4
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=1000
+PDOMapping=0
+
+[6102]
+ParameterName=Konstant K0
+ObjectType=0x8
+SubNumber=5
+
+[6102sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=4
+PDOMapping=0
+
+[6102sub1]
+ParameterName=Channel 1
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6102sub2]
+ParameterName=Channel 2
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6102sub3]
+ParameterName=Channel 3
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6102sub4]
+ParameterName=Channel 4
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6103]
+ParameterName=Konstant K1
+ObjectType=0x8
+SubNumber=5
+
+[6103sub0]
+ParameterName=Kopie von Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=4
+PDOMapping=0
+
+[6103sub1]
+ParameterName=Channel 1
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=20297
+PDOMapping=0
+
+[6103sub2]
+ParameterName=Channel 2
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=20297
+PDOMapping=0
+
+[6103sub3]
+ParameterName=Channel 3
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=20297
+PDOMapping=0
+
+[6103sub4]
+ParameterName=Channel 4
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=20297
+PDOMapping=0
+
+[6104]
+ParameterName=Konstant SH
+ObjectType=0x8
+SubNumber=5
+
+[6104sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=4
+PDOMapping=0
+
+[6104sub1]
+ParameterName=Channel 1
+ObjectType=0x7
+DataType=0x0009
+AccessType=rw
+DefaultValue=-
+PDOMapping=0
+
+[6104sub2]
+ParameterName=Channel 2
+ObjectType=0x7
+DataType=0x0009
+AccessType=rw
+DefaultValue=-
+PDOMapping=0
+
+[6104sub3]
+ParameterName=Channel 3
+ObjectType=0x7
+DataType=0x0009
+AccessType=rw
+DefaultValue=-
+PDOMapping=0
+
+[6104sub4]
+ParameterName=Channel 4
+ObjectType=0x7
+DataType=0x0009
+AccessType=rw
+DefaultValue=-
+PDOMapping=0
+
+[6110]
+ParameterName=1 x 12Bit AD-Conversion
+ObjectType=0x8
+SubNumber=2
+
+[6110sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=1
+PDOMapping=0
+
+[6110sub1]
+ParameterName=Channel 1
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[6111]
+ParameterName=AD - Values
+ObjectType=0x8
+SubNumber=2
+
+[6111sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=1
+PDOMapping=0
+
+[6111sub1]
+ParameterName=Channel 1
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[6112]
+ParameterName=Konstant K0
+ObjectType=0x8
+SubNumber=2
+
+[6112sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=1
+PDOMapping=0
+
+[6112sub1]
+ParameterName=Channel 1
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6113]
+ParameterName=Konstant K1
+ObjectType=0x8
+SubNumber=2
+
+[6113sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=1
+PDOMapping=0
+
+[6113sub1]
+ParameterName=Channel 1
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=20209
+PDOMapping=0
+
+[6114]
+ParameterName=Konstant SH
+ObjectType=0x8
+SubNumber=2
+
+[6114sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=1
+PDOMapping=0
+
+[6114sub1]
+ParameterName=Channel 1
+ObjectType=0x7
+DataType=0x0009
+AccessType=rw
+DefaultValue=-
+PDOMapping=0
+
+[6120]
+ParameterName=1 x 12Bit DA-Conversion
+ObjectType=0x8
+SubNumber=2
+
+[6120sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=1
+PDOMapping=0
+
+[6120sub1]
+ParameterName=Channel 1
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6121]
+ParameterName=AD - Values
+ObjectType=0x8
+SubNumber=2
+
+[6121sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=1
+PDOMapping=0
+
+[6121sub1]
+ParameterName=Channel 1
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[6122]
+ParameterName=Konstant K0
+ObjectType=0x8
+SubNumber=2
+
+[6122sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=1
+PDOMapping=0
+
+[6122sub1]
+ParameterName=Channel 1
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6123]
+ParameterName=Konstant K1
+ObjectType=0x8
+SubNumber=2
+
+[6123sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=1
+PDOMapping=0
+
+[6123sub1]
+ParameterName=Channel 1
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=13107
+PDOMapping=0
+
+[6130]
+ParameterName=RTC
+ObjectType=0x8
+SubNumber=3
+
+[6130sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=2
+PDOMapping=0
+
+[6130sub1]
+ParameterName=Time
+ObjectType=0x7
+DataType=0x0009
+AccessType=rw
+DefaultValue=HH MM SS
+PDOMapping=0
+
+[6130sub2]
+ParameterName=Date
+ObjectType=0x7
+DataType=0x0009
+AccessType=rw
+DefaultValue=DOW DD MM YY
+PDOMapping=0
+
+[ManufacturerObjects]
+SupportedObjects=3
+1=0x2000
+2=0x2002
+3=0x2100
+
+[2000]
+ParameterName=Device Manufacturer
+ObjectType=0x7
+DataType=0x0009
+AccessType=ro
+DefaultValue=LAR + Wendler
+PDOMapping=0
+
+[2002]
+ParameterName=Application Info
+ObjectType=0x8
+SubNumber=6
+
+[2002sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=5
+PDOMapping=0
+
+[2002sub1]
+ParameterName=Application Vendor Name
+ObjectType=0x7
+DataType=0x0009
+AccessType=ro
+DefaultValue=LAR + Wendler
+PDOMapping=0
+
+[2002sub2]
+ParameterName=Application Name
+ObjectType=0x7
+DataType=0x0009
+AccessType=ro
+DefaultValue=AnalogNode
+PDOMapping=0
+
+[2002sub3]
+ParameterName=Application Add-Info
+ObjectType=0x7
+DataType=0x0009
+AccessType=ro
+DefaultValue=LAR + Wendler
+PDOMapping=0
+
+[2002sub4]
+ParameterName=Application Version1
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=78336
+PDOMapping=0
+
+[2002sub5]
+ParameterName=Application Version2
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=65536
+PDOMapping=0
+
+[2100]
+ParameterName=Debug
+ObjectType=0x8
+SubNumber=5
+
+[2100sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=4
+PDOMapping=0
+
+[2100sub1]
+ParameterName=Rxmsgcount
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=-
+PDOMapping=0
+
+[2100sub2]
+ParameterName=Txmsgcount
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=-
+PDOMapping=0
+
+[2100sub3]
+ParameterName=Rxoverflow
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=-
+PDOMapping=0
+
+[2100sub4]
+ParameterName=CAN_Messages
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=-
+PDOMapping=0

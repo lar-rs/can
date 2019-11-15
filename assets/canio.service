@@ -1,0 +1,11 @@
+[Unit]
+Description=canrpc restful server
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/canrpc
+Type=exec
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

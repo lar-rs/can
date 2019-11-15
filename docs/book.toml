@@ -1,0 +1,13 @@
+[book]
+authors = ["maintainers"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Canbus Socket can in Rust"
+
+[build]
+create-missing = false
+
+[output.html]
+git-repository-url = "https://github.com/async-rs/async-std"
+git-repository-icon = "fa-github"

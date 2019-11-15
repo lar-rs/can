@@ -1,0 +1,1125 @@
+[FileInfo]
+CreatedBy=LAR AG
+ModifiedBy=LAR AG
+Description=LAR Dopplemotornode v12
+CreationTime=11:33AM
+CreationDate=03-04-2014
+ModificationTime=11:33AM
+ModificationDate=03-04-2014
+FileName=lar_doppelmotornode_v12.eds
+FileVersion=1
+FileRevision=1
+EDSVersion=2
+TypeInfo=NodeMotor3Object
+Name=Doppelmotor
+
+[DeviceInfo]
+VendorName=ebm papst
+VendorNumber=0x0000027D
+ProductName=ECI K5
+ProductNumber=0
+RevisionNumber=0
+OrderCode=0
+BaudRate_10=1
+BaudRate_20=1
+BaudRate_50=1
+BaudRate_125=1
+BaudRate_250=1
+BaudRate_500=1
+BaudRate_800=0
+BaudRate_1000=1
+SimpleBootUpMaster=0
+SimpleBootUpSlave=1
+Granularity=8
+DynamicChannelsSupported=0
+CompactPDO=0
+GroupMessaging=0
+NrOfRXPDO=4
+NrOfTXPDO=4
+LSS_Supported=1
+
+[DummyUsage]
+Dummy0001=0
+Dummy0002=0
+Dummy0003=0
+Dummy0004=0
+Dummy0005=0
+Dummy0006=0
+Dummy0007=0
+
+[Comments]
+Lines=0
+
+[MandatoryObjects]
+SupportedObjects=3
+1=0x1000
+2=0x1001
+3=0x1018
+
+[1000]
+ParameterName=Device Type
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=262145
+PDOMapping=0
+
+[1001]
+ParameterName=Error Register 8
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[1018]
+ParameterName=Identity Object
+ObjectType=0x9
+SubNumber=5
+
+[1018sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=4
+PDOMapping=0
+
+[1018sub1]
+ParameterName=VendorID
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=0x12345678
+PDOMapping=0
+
+[1018sub2]
+ParameterName=Product-Code
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=0x30000
+PDOMapping=0
+
+[1018sub3]
+ParameterName=Revision Number Platine
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=0x20000
+PDOMapping=0
+
+[1018sub4]
+ParameterName=Serial Number
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=524331
+PDOMapping=0
+
+[OptionalObjects]
+SupportedObjects=25
+1=0x1003
+2=0x1005
+3=0x100C
+4=0x100D
+5=0x1010
+6=0x1011
+7=0x1029
+8=0x6000
+9=0x6010
+10=0x6020
+11=0x6021
+12=0x6022
+13=0x6023
+14=0x6100
+15=0x6101
+16=0x6102
+17=0x6103
+18=0x6110
+19=0x6111
+20=0x6200
+21=0x6201
+22=0x6202
+23=0x6203
+24=0x6210
+25=0x6211
+
+[1003]
+ParameterName=Error Register 16
+ObjectType=0x7
+DataType=0x0009
+AccessType=ro
+DefaultValue=-
+PDOMapping=0
+
+[1005]
+ParameterName=COB-ID SYNC
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=-128
+PDOMapping=0
+
+[100C]
+ParameterName=Guard Time
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[100D]
+ParameterName=Guard Life Time
+ObjectType=0x7
+DataType=0x0002
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1010]
+ParameterName=Reload default parameters
+ObjectType=0x7
+DataType=0x0009
+AccessType=rw
+DefaultValue=-
+PDOMapping=0
+
+[1011]
+ParameterName=Write Parameters to EEProm
+ObjectType=0x7
+DataType=0x0009
+AccessType=rw
+DefaultValue=-
+PDOMapping=0
+
+[1029]
+ParameterName=1029 Errorbehaviour
+ObjectType=0x7
+DataType=0x0002
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6000]
+ParameterName=Uart 0
+ObjectType=0x8
+SubNumber=4
+
+[6000sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=6
+PDOMapping=0
+
+[6000sub1]
+ParameterName=Uart Daten1
+ObjectType=0x7
+DataType=0x0009
+AccessType=rw
+DefaultValue=
+PDOMapping=0
+
+[6000sub2]
+ParameterName=RX-Length
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=126
+PDOMapping=0
+
+[6000sub3]
+ParameterName=TX-Length
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=126
+PDOMapping=0
+
+[6000sub4]
+ParameterName=Set Baudrate
+ObjectType=0x7
+DataType=0x0002
+AccessType=rw
+DefaultValue=9
+PDOMapping=0
+
+[6010]
+ParameterName=Uart 1
+ObjectType=0x8
+SubNumber=4
+
+[6010sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=6
+PDOMapping=0
+
+[6010sub1]
+ParameterName=Uart Daten2
+ObjectType=0x7
+DataType=0x0009
+AccessType=rw
+DefaultValue=
+PDOMapping=0
+
+[6010sub2]
+ParameterName=RX-Length
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=126
+PDOMapping=0
+
+[6010sub3]
+ParameterName=TX-Length
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=126
+PDOMapping=0
+
+[6010sub4]
+ParameterName=Set Baudrate
+ObjectType=0x7
+DataType=0x0002
+AccessType=rw
+DefaultValue=9
+PDOMapping=0
+
+[6020]
+ParameterName=Temperaturen / Spannungen
+ObjectType=0x8
+SubNumber=4
+
+[6020sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[6020sub1]
+ParameterName=Umgebungstemperatur
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=10
+PDOMapping=0
+
+[6020sub2]
+ParameterName=Spannung U24
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=1350
+PDOMapping=0
+
+[6020sub3]
+ParameterName=Spannung Prozessor
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=450
+PDOMapping=0
+
+[6021]
+ParameterName=AD - Values
+ObjectType=0x8
+SubNumber=4
+
+[6021sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[6021sub1]
+ParameterName=Umgebungstemperatur
+ObjectType=0x7
+DataType=0x0003
+AccessType=ro
+DefaultValue==10
+PDOMapping=0
+
+[6021sub2]
+ParameterName=Spannung U24
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=620
+PDOMapping=0
+
+[6021sub3]
+ParameterName=Spannung Prozessor
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=250
+PDOMapping=0
+
+[6022]
+ParameterName=Konstant K0
+ObjectType=0x8
+SubNumber=4
+
+[6022sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[6022sub1]
+ParameterName=Umgebungstemperatur
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=774
+PDOMapping=0
+
+[6022sub2]
+ParameterName=Spannung U24
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6022sub3]
+ParameterName=Spannung Prozessor
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6023]
+ParameterName=Konstant K1
+ObjectType=0x8
+SubNumber=4
+
+[6023sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=rw
+DefaultValue=3
+PDOMapping=0
+
+[6023sub1]
+ParameterName=Umgebungstemperatur
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=58000
+PDOMapping=0
+
+[6023sub2]
+ParameterName=Spannung U24
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=4400
+PDOMapping=0
+
+[6023sub3]
+ParameterName=Spannung Prozessor
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=28000
+PDOMapping=0
+
+[6100]
+ParameterName=Stepper 1 / Ruhrer 1
+ObjectType=0x8
+SubNumber=4
+
+[6100sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[6100sub1]
+ParameterName=Stepper=0, Ruhrer =1
+ObjectType=0x7
+DataType=0x0002
+AccessType=rw
+DefaultValue=1
+PDOMapping=0
+
+[6100sub2]
+ParameterName=Endschalter, geschlossen=1
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[6100sub3]
+ParameterName=Endschalter invertieren
+ObjectType=0x7
+DataType=0x0002
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6100sub4]
+ParameterName=Diagnose TCM249
+ObjectType=0x7
+DataType=0x0002
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6101]
+ParameterName=Stepper 1 - Position
+ObjectType=0x8
+SubNumber=5
+
+[6101sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=5
+PDOMapping=0
+
+[6101sub1]
+ParameterName=Command / Status 0/1
+ObjectType=0x7
+DataType=0x0002
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6101sub2]
+ParameterName=Command  go to Pos
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6101sub3]
+ParameterName=Position Old
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[6101sub4]
+ParameterName=Max Position
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=1800
+PDOMapping=0
+
+[6101sub5]
+ParameterName=Fahrparameter
+ObjectType=0x7
+DataType=0x0002
+AccessType=rw
+DefaultValue=1
+PDOMapping=0
+
+[6101sub6]
+ParameterName=Stall guard flag
+ObjectType=0x7
+DataType=0x0002
+AccessType=rw
+DefaultValue=1
+PDOMapping=0
+
+
+[6102]
+ParameterName=Ruhrer 1
+ObjectType=0x8
+SubNumber=3
+
+[6102sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=2
+PDOMapping=0
+
+[6102sub1]
+ParameterName=Aus=0, Ein=1
+ObjectType=0x7
+DataType=0x0002
+AccessType=rw
+DefaultValue=1
+PDOMapping=0
+
+[6102sub2]
+ParameterName=Delay
+ObjectType=0x7
+DataType=0x0002
+AccessType=rw
+DefaultValue=-126
+PDOMapping=0
+
+[6103]
+ParameterName=Strom 1
+ObjectType=0x8
+SubNumber=5
+
+[6103sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=4
+PDOMapping=0
+
+[6103sub1]
+ParameterName=Stromsollwert / mA
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=600
+PDOMapping=0
+
+[6103sub2]
+ParameterName=Stromwert Digital
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=204
+PDOMapping=0
+
+[6103sub3]
+ParameterName=Haltestromsollwert / mA
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=150
+PDOMapping=0
+
+[6103sub4]
+ParameterName=Haltestromwert Digital
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=51
+PDOMapping=0
+
+[6110]
+ParameterName=Pumpe 1
+ObjectType=0x8
+SubNumber=9
+
+[6110sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=8
+PDOMapping=0
+
+[6110sub1]
+ParameterName=0=Stop, 1=Start 2=Wait
+ObjectType=0x7
+DataType=0x0002
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6110sub2]
+ParameterName=0=Normal, 1=Spulen,2=Intervall
+ObjectType=0x7
+DataType=0x0002
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6110sub3]
+ParameterName=Drehrichtung rechts / links
+ObjectType=0x7
+DataType=0x0002
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6110sub4]
+ParameterName=Speed soll
+ObjectType=0x7
+DataType=0x0002
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6110sub5]
+ParameterName=Interwall Pos-Impulse
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6110sub6]
+ParameterName=Interwall Time / sec
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6110sub7]
+ParameterName=Position
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[6110sub8]
+ParameterName=Delay PW
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[6111]
+ParameterName=Konstanten 1
+ObjectType=0x8
+SubNumber=4
+
+[6111sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[6111sub1]
+ParameterName=K-p
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=1
+PDOMapping=0
+
+[6111sub2]
+ParameterName=K-d
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=1
+PDOMapping=0
+
+[6111sub3]
+ParameterName=K-i
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=1
+PDOMapping=0
+
+[6200]
+ParameterName=Stepper 2 / Ruhrer 2
+ObjectType=0x8
+SubNumber=4
+
+[6200sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[6200sub1]
+ParameterName=Stepper=0, Ruhrer =1
+ObjectType=0x7
+DataType=0x0002
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6200sub2]
+ParameterName=Endschalter, geschlossen=1
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[6200sub3]
+ParameterName=Endschalter invertieren
+ObjectType=0x7
+DataType=0x0002
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6200sub4]
+ParameterName=Diagnose TCM249
+ObjectType=0x7
+DataType=0x0002
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6201]
+ParameterName=Stepper 2 - Position
+ObjectType=0x8
+SubNumber=5
+
+[6201sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=5
+PDOMapping=0
+
+[6201sub1]
+ParameterName=Command / Status 0/1
+ObjectType=0x7
+DataType=0x0002
+AccessType=rw
+DefaultValue=-
+PDOMapping=0
+
+[6201sub2]
+ParameterName=Command  go to Pos
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=43
+PDOMapping=0
+
+[6201sub3]
+ParameterName=Position Old
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[6201sub4]
+ParameterName=Max Position
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=2500
+PDOMapping=0
+
+[6201sub5]
+ParameterName=Fahrparameter
+ObjectType=0x7
+DataType=0x0002
+AccessType=rw
+DefaultValue=1
+PDOMapping=0
+
+[6201sub6]
+ParameterName=Stall guard flag
+ObjectType=0x7
+DataType=0x0002
+AccessType=rw
+DefaultValue=1
+PDOMapping=0
+
+[6202]
+ParameterName=Ruhrer 2
+ObjectType=0x8
+SubNumber=3
+
+[6202sub0]
+ParameterName=Copy of Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=2
+PDOMapping=0
+
+[6202sub1]
+ParameterName=Aus=0, Ein=1
+ObjectType=0x7
+DataType=0x0002
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6202sub2]
+ParameterName=Delay
+ObjectType=0x7
+DataType=0x0002
+AccessType=rw
+DefaultValue=254
+PDOMapping=0
+
+[6203]
+ParameterName=Strom 2
+ObjectType=0x8
+SubNumber=5
+
+[6203sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=4
+PDOMapping=0
+
+[6203sub1]
+ParameterName=Stromsollwert / mA
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=1500
+PDOMapping=0
+
+[6203sub2]
+ParameterName=Stromwert Digital
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=511
+PDOMapping=0
+
+[6203sub3]
+ParameterName=Haltestromsollwert / mA
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=375
+PDOMapping=0
+
+[6203sub4]
+ParameterName=Haltestromwert Digital
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=127
+PDOMapping=0
+
+[6210]
+ParameterName=Pumpe 2
+ObjectType=0x8
+SubNumber=9
+
+[6210sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=8
+PDOMapping=0
+
+[6210sub1]
+ParameterName=0=Stop, 1=Start 2=Wait
+ObjectType=0x7
+DataType=0x0002
+AccessType=rw
+DefaultValue=-
+PDOMapping=0
+
+[6210sub2]
+ParameterName=0=Normal, 1=Spulen,2=Intervall
+ObjectType=0x7
+DataType=0x0002
+AccessType=rw
+DefaultValue=-
+PDOMapping=0
+
+[6210sub3]
+ParameterName=Drehrichtung rechts / links
+ObjectType=0x7
+DataType=0x0002
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6210sub4]
+ParameterName=Speed soll
+ObjectType=0x7
+DataType=0x0002
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6210sub5]
+ParameterName=Interwall Pos-Impulse
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6210sub6]
+ParameterName=Interwall Time / sec
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[6210sub7]
+ParameterName=Position
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[6210sub8]
+ParameterName=Delay PW
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[6211]
+ParameterName=Konstanten 2
+ObjectType=0x8
+SubNumber=4
+
+[6211sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[6211sub1]
+ParameterName=K-p
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=6
+PDOMapping=0
+
+[6211sub2]
+ParameterName=K-d
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=1
+PDOMapping=0
+
+[6211sub3]
+ParameterName=K-i
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=1
+PDOMapping=0
+
+[ManufacturerObjects]
+SupportedObjects=3
+1=0x2000
+2=0x2002
+3=0x2100
+
+[2000]
+ParameterName=Device Manufacturer
+ObjectType=0x7
+DataType=0x0009
+AccessType=ro
+DefaultValue=LAR Process Analysers AG
+PDOMapping=0
+
+[2002]
+ParameterName=Application Info
+ObjectType=0x8
+SubNumber=6
+
+[2002sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=5
+PDOMapping=0
+
+[2002sub1]
+ParameterName=Application Vendor Name
+ObjectType=0x7
+DataType=0x0009
+AccessType=ro
+DefaultValue=LAR Process Analysers AG
+PDOMapping=0
+
+[2002sub2]
+ParameterName=Application Name
+ObjectType=0x7
+DataType=0x0009
+AccessType=ro
+DefaultValue=DoppelMotorNode
+PDOMapping=0
+
+[2002sub3]
+ParameterName=Application Add-Info
+ObjectType=0x7
+DataType=0x0009
+AccessType=ro
+DefaultValue=LAR Process Analysers AG
+PDOMapping=0
+
+[2002sub4]
+ParameterName=Application Version1
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=81920
+PDOMapping=0
+
+[2002sub5]
+ParameterName=Application Version2
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=131072
+PDOMapping=0
+
+[2100]
+ParameterName=Debug
+ObjectType=0x8
+SubNumber=3
+
+[2100sub0]
+ParameterName=Nr of Subobjects
+ObjectType=0x7
+DataType=0x0002
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[2100sub1]
+ParameterName=Rxmsgcount
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=-
+PDOMapping=0
+
+[2100sub2]
+ParameterName=Txmsgcount
+ObjectType=0x7
+DataType=0x0006
+AccessType=ro
+DefaultValue=-
+PDOMapping=0

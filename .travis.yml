@@ -1,0 +1,47 @@
+language: rust
+rust: nightly
+os: linux
+cache: cargo
+
+install:
+  - rustup component add rustfmt
+  - rustup component add clippy
+  # - rustup target add thumbv7em-none-eabihf
+
+# branches:
+#   only:
+    # - develop
+
+
+matrix:
+  include:
+    # - name: "Test"
+    #   script:
+    #     - cargo test --no-run  # let's measure compile time separately
+    #     - cargo test
+    - name: "Rust Docs"
+      if: branch = master AND type = push
+      before_script:
+        - DEPLOY_DOCS=1
+      language: rust
+      rust: nightly
+      script:
+        - cargo doc --all --no-deps
+      env:
+        - RUSTFLAGS="-D warnings", CARGO_INCREMENTAL=0
+    - name: "Rust build"
+      os: linux
+      dist: xenial
+      script:
+        - cargo build --verbose
+
+deploy:
+  - provider: pages
+    skip-cleanup: true
+    github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+    keep-history: true
+    local-dir: target/doc
+    branch: gh-pages
+    on:
+      branch: master
+      condition: $DEPLOY_DOCS = 1

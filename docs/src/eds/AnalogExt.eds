@@ -1,0 +1,822 @@
+
+[FileInfo]
+FileName=AnalogExt1.eds
+FileVersion=1
+FileRevision=2
+EDSVersion=4.0
+Description=EDS File for CANopen bus controller X20BC0043-10
+CreationTime=08:30AM
+CreationDate=03-03-2011
+CreatedBy=Bernecker+Rainer Industrie-Elektronik Ges.m.b.H.
+ModificationTime=01:48PM
+ModificationDate=03-07-2011
+ModifiedBy=Bernecker+Rainer Industrie-Elektronik Ges.m.b.H.
+TypeInfo=NodeAnalogExtObject
+TypicallyId=0x1c
+Name=Analogext
+
+[DeviceInfo]
+VendorName=Bernecker+Rainer Industrie-Elektronik Ges.m.b.H.
+VendorNumber=108
+ProductName=X20BC0043-10 CANopen Bus Controller
+ProductNumber=43192
+RevisionNumber=1
+OrderCode=X20BC0043-10
+BaudRate_10=1
+BaudRate_20=1
+BaudRate_50=1
+BaudRate_125=1
+BaudRate_250=1
+BaudRate_500=1
+BaudRate_800=1
+BaudRate_1000=1
+SimpleBootUpSlave=1
+SimpleBootUpMaster=0
+Granularity=1
+DynamicChannelsSupported=0
+GroupMessaging=0
+NrOfRXPDO=32
+NrOfTXPDO=32
+LSS_Supported=0
+CompactPDO=0
+
+[DummyUsage]
+Dummy0001=1
+Dummy0002=1
+Dummy0003=1
+Dummy0004=1
+Dummy0005=1
+Dummy0006=1
+Dummy0007=1
+
+
+[Comments]
+Lines=0x0
+
+[MandatoryObjects]
+SupportedObjects=3
+1=0x1000
+2=0x1001
+3=0x1018
+
+[1000]
+ParameterName=Device type
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x00000000
+HighLimit=0xFFFFFFFF
+DefaultValue=0x000F0191
+AccessType=const
+
+[1001]
+ParameterName=Error Register
+ObjectType=0x7
+DataType=0x0005
+LowLimit=0x00
+HighLimit=0xFF
+DefaultValue=0x00
+AccessType=ro
+
+[1018]
+SubNumber=5
+ParameterName=Identity Object
+ObjectType=0x9
+
+[1018sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+LowLimit=0x1
+HighLimit=0x4
+DefaultValue=0x4
+AccessType=ro
+
+[1018sub1]
+ParameterName=Vendor Id
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x0
+HighLimit=0xFFFFFFFF
+DefaultValue=0x0000006C
+AccessType=ro
+
+[1018sub2]
+ParameterName=Product Code
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x00000000
+HighLimit=0xFFFFFFFF
+DefaultValue=0xA8B8
+AccessType=ro
+
+[1018sub3]
+ParameterName=Revision number
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x00000000
+HighLimit=0xFFFFFFFF
+DefaultValue=0x10102
+AccessType=ro
+
+[1018sub4]
+ParameterName=Serial number
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x0
+HighLimit=0xFFFFFFFF
+AccessType=ro
+
+
+[OptionalObjects]
+SupportedObjects=85
+1=0x1003
+2=0x1005
+3=0x1008
+4=0x1009
+5=0x100A
+6=0x100C
+7=0x100D
+8=0x1010
+9=0x1011
+10=0x1014
+11=0x1015
+12=0x1016
+13=0x1017
+14=0x1020
+16=0x1029
+77=0x6411
+
+[1003]
+SubNumber=33
+ParameterName=Pre-defined Error Field
+ObjectType=0x8
+
+[1003sub0]
+ParameterName=Number of Errors
+ObjectType=0x7
+DataType=0x0005
+LowLimit=0x0
+DefaultValue=0x0
+AccessType=rw
+
+[1003sub1]
+ParameterName=Standard Error Field 1
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x0
+HighLimit=0xFFFFFFFF
+DefaultValue=0x0
+AccessType=ro
+
+[1003sub2]
+ParameterName=Standard Error Field 2
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x0
+HighLimit=0xFFFFFFFF
+DefaultValue=0x0
+AccessType=ro
+
+[1003sub3]
+ParameterName=Standard Error Field 3
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x0
+HighLimit=0xFFFFFFFF
+DefaultValue=0x0
+AccessType=ro
+
+[1003sub4]
+ParameterName=Standard Error Field 4
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x0
+HighLimit=0xFFFFFFFF
+DefaultValue=0x0
+AccessType=ro
+
+[1003sub5]
+ParameterName=Standard Error Field 5
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x0
+HighLimit=0xFFFFFFFF
+DefaultValue=0x0
+AccessType=ro
+
+[1003sub6]
+ParameterName=Standard Error Field 6
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x0
+HighLimit=0xFFFFFFFF
+DefaultValue=0x0
+AccessType=ro
+
+[1003sub7]
+ParameterName=Standard Error Field 7
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x0
+HighLimit=0xFFFFFFFF
+DefaultValue=0x0
+AccessType=ro
+
+[1003sub8]
+ParameterName=Standard Error Field 8
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x0
+HighLimit=0xFFFFFFFF
+DefaultValue=0x0
+AccessType=ro
+
+[1003sub9]
+ParameterName=Standard Error Field 9
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x0
+HighLimit=0xFFFFFFFF
+DefaultValue=0x0
+AccessType=ro
+
+[1003subA]
+ParameterName=Standard Error Field 10
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x0
+HighLimit=0xFFFFFFFF
+DefaultValue=0x0
+AccessType=ro
+
+[1003subB]
+ParameterName=Standard Error Field 11
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x0
+HighLimit=0xFFFFFFFF
+DefaultValue=0x0
+AccessType=ro
+
+[1003subC]
+ParameterName=Standard Error Field 12
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x0
+HighLimit=0xFFFFFFFF
+DefaultValue=0x0
+AccessType=ro
+
+[1003subD]
+ParameterName=Standard Error Field 13
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x0
+HighLimit=0xFFFFFFFF
+DefaultValue=0x0
+AccessType=ro
+
+[1003subE]
+ParameterName=Standard Error Field 14
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x0
+HighLimit=0xFFFFFFFF
+DefaultValue=0x0
+AccessType=ro
+
+[1003subF]
+ParameterName=Standard Error Field 15
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x0
+HighLimit=0xFFFFFFFF
+DefaultValue=0x0
+AccessType=ro
+
+[1003sub10]
+ParameterName=Standard Error Field 16
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x0
+HighLimit=0xFFFFFFFF
+DefaultValue=0x0
+AccessType=ro
+
+[1003sub11]
+ParameterName=Standard Error Field 17
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x0
+HighLimit=0xFFFFFFFF
+DefaultValue=0x0
+AccessType=ro
+
+[1003sub12]
+ParameterName=Standard Error Field 18
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x0
+HighLimit=0xFFFFFFFF
+DefaultValue=0x0
+AccessType=ro
+
+[1003sub13]
+ParameterName=Standard Error Field 19
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x0
+HighLimit=0xFFFFFFFF
+DefaultValue=0x0
+AccessType=ro
+
+[1003sub14]
+ParameterName=Standard Error Field 20
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x0
+HighLimit=0xFFFFFFFF
+DefaultValue=0x0
+AccessType=ro
+
+[1003sub15]
+ParameterName=Standard Error Field 21
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x0
+HighLimit=0xFFFFFFFF
+DefaultValue=0x0
+AccessType=ro
+
+[1003sub16]
+ParameterName=Standard Error Field 22
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x0
+HighLimit=0xFFFFFFFF
+DefaultValue=0x0
+AccessType=ro
+
+[1003sub17]
+ParameterName=Standard Error Field 23
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x0
+HighLimit=0xFFFFFFFF
+DefaultValue=0x0
+AccessType=ro
+
+[1003sub18]
+ParameterName=Standard Error Field 24
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x0
+HighLimit=0xFFFFFFFF
+DefaultValue=0x0
+AccessType=ro
+
+[1003sub19]
+ParameterName=Standard Error Field 25
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x0
+HighLimit=0xFFFFFFFF
+DefaultValue=0x0
+AccessType=ro
+
+[1003sub1A]
+ParameterName=Standard Error Field 26
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x0
+HighLimit=0xFFFFFFFF
+DefaultValue=0x0
+AccessType=ro
+
+[1003sub1B]
+ParameterName=Standard Error Field 27
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x0
+HighLimit=0xFFFFFFFF
+DefaultValue=0x0
+AccessType=ro
+
+[1003sub1C]
+ParameterName=Standard Error Field 28
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x0
+HighLimit=0xFFFFFFFF
+DefaultValue=0x0
+AccessType=ro
+
+[1003sub1D]
+ParameterName=Standard Error Field 29
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x0
+HighLimit=0xFFFFFFFF
+DefaultValue=0x0
+AccessType=ro
+
+[1003sub1E]
+ParameterName=Standard Error Field 30
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x0
+HighLimit=0xFFFFFFFF
+DefaultValue=0x0
+AccessType=ro
+
+[1003sub1F]
+ParameterName=Standard Error Field 31
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x0
+HighLimit=0xFFFFFFFF
+DefaultValue=0x0
+AccessType=ro
+
+[1003sub20]
+ParameterName=Standard Error Field 32
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x0
+HighLimit=0xFFFFFFFF
+DefaultValue=0x0
+AccessType=ro
+
+[1005]
+ParameterName=COB-ID SYNC
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x00000001
+HighLimit=0xFFFFFFFF
+DefaultValue=0x00000080
+AccessType=rw
+
+[1008]
+ParameterName=Manufacturer Device Name
+ObjectType=0x7
+DataType=0x0009
+DefaultValue=X20BC0043-10
+AccessType=const
+
+[1009]
+ParameterName=Manufacturer Hardware Version
+ObjectType=0x7
+DataType=0x0009
+AccessType=const
+
+[100A]
+ParameterName=Manufacturer Software Version
+ObjectType=0x7
+DataType=0x0009
+AccessType=const
+
+[100C]
+ParameterName=Guard Time
+ObjectType=0x7
+DataType=0x0006
+LowLimit=0
+HighLimit=65535
+DefaultValue=0
+AccessType=rw
+
+[100D]
+ParameterName=Life Time Factor
+ObjectType=0x7
+DataType=0x0005
+LowLimit=0x0
+HighLimit=0xFF
+DefaultValue=0x00
+AccessType=rw
+
+[1010]
+SubNumber=5
+ParameterName=Store Parameter Field
+ObjectType=0x8
+
+[1010sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+LowLimit=0x0
+HighLimit=0x7F
+DefaultValue=0x04
+AccessType=ro
+
+[1010sub1]
+ParameterName=Save all Parameters
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+
+[1010sub2]
+ParameterName=Save Communication Parameters
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+
+[1010sub3]
+ParameterName=Save Application Parameters
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+
+[1010sub4]
+ParameterName=Save Manufacturer Parameters
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+
+[1011]
+SubNumber=5
+ParameterName=Restore Default Parameters
+ObjectType=0x8
+
+[1011sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+LowLimit=0x0
+HighLimit=0x7F
+DefaultValue=0x04
+AccessType=ro
+
+[1011sub1]
+ParameterName=Restore all Default Parameters
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+
+[1011sub2]
+ParameterName=Restore Communication Default Parameters
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+
+[1011sub3]
+ParameterName=Restore Application Default Parameters
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+
+[1011sub4]
+ParameterName=Restore Manufacturer Default Parameters
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+
+[1014]
+ParameterName=COB-ID EMCY
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x00000001
+HighLimit=0xFFFFFFFF
+DefaultValue=$NODEID+0x080
+AccessType=rw
+
+[1015]
+ParameterName=Inhibit Time Emergency
+ObjectType=0x7
+DataType=0x0006
+LowLimit=0x0
+HighLimit=0xFFFF
+DefaultValue=0x0
+AccessType=rw
+
+[1016]
+SubNumber=2
+ParameterName=Consumer Heartbeat Time
+ObjectType=0x8
+
+[1016sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+LowLimit=0x1
+HighLimit=0x7F
+DefaultValue=0x1
+AccessType=ro
+
+[1016sub1]
+ParameterName=Consumer Heartbeat Time
+ObjectType=0x7
+DataType=0x0007
+LowLimit=0x00000000
+HighLimit=0x007FFFFF
+DefaultValue=0
+AccessType=rw
+
+[1017]
+ParameterName=Producer Heartbeat Time
+ObjectType=0x7
+DataType=0x0006
+LowLimit=0
+HighLimit=65535
+DefaultValue=0
+AccessType=rw
+
+[1020]
+SubNumber=3
+ParameterName=Verify Configuration
+ObjectType=0x8
+
+[1020sub0]
+ParameterName=Number of entries
+ObjectType=0x7
+DataType=0x0005
+DefaultValue=2
+AccessType=ro
+
+[1020sub1]
+ParameterName=Configuration date
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+
+[1020sub2]
+ParameterName=Configuration time
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+
+[1029]
+SubNumber=3
+ParameterName=Error behaviour
+ObjectType=0x8
+
+[1029sub0]
+ParameterName=Nr of Error Classes
+ObjectType=0x7
+DataType=0x0005
+DefaultValue=128
+AccessType=ro
+
+[1029sub1]
+ParameterName=Communication Error
+ObjectType=0x7
+DataType=0x0005
+DefaultValue=0
+AccessType=rw
+
+[1029sub80]
+ParameterName=Advanced mapping
+ObjectType=0x7
+DataType=0x0005
+DefaultValue=0x81
+AccessType=rw
+
+[6411]
+SubNumber=21
+ParameterName=Write Analog Output 16 Bit
+ObjectType=0x8
+
+[6411sub0]
+ParameterName=Number of Elements
+ObjectType=0x7
+DataType=0x0005
+DefaultValue=20
+AccessType=ro
+
+[6411sub1]
+ParameterName=AnalogueOutput16[1]
+ObjectType=0x7
+DataType=0x0003
+AccessType=rww
+PDOMapping=1
+
+[6411sub2]
+ParameterName=AnalogueOutput16[2]
+ObjectType=0x7
+DataType=0x0003
+AccessType=rww
+PDOMapping=1
+
+[6411sub3]
+ParameterName=AnalogueOutput16[3]
+ObjectType=0x7
+DataType=0x0003
+AccessType=rww
+PDOMapping=1
+
+[6411sub4]
+ParameterName=AnalogueOutput16[4]
+ObjectType=0x7
+DataType=0x0003
+AccessType=rww
+PDOMapping=1
+
+[6411sub5]
+ParameterName=AnalogueOutput16[5]
+ObjectType=0x7
+DataType=0x0003
+AccessType=rww
+PDOMapping=1
+
+[6411sub6]
+ParameterName=AnalogueOutput16[6]
+ObjectType=0x7
+DataType=0x0003
+AccessType=rww
+PDOMapping=1
+
+[6411sub7]
+ParameterName=AnalogueOutput16[7]
+ObjectType=0x7
+DataType=0x0003
+AccessType=rww
+PDOMapping=1
+
+[6411sub8]
+ParameterName=AnalogueOutput16[8]
+ObjectType=0x7
+DataType=0x0003
+AccessType=rww
+PDOMapping=1
+
+[6411sub9]
+ParameterName=AnalogueOutput16[9]
+ObjectType=0x7
+DataType=0x0003
+AccessType=rww
+PDOMapping=1
+
+[6411subA]
+ParameterName=AnalogueOutput16[10]
+ObjectType=0x7
+DataType=0x0003
+AccessType=rww
+PDOMapping=1
+
+[6411subB]
+ParameterName=AnalogueOutput16[11]
+ObjectType=0x7
+DataType=0x0003
+AccessType=rww
+PDOMapping=1
+
+[6411subC]
+ParameterName=AnalogueOutput16[12]
+ObjectType=0x7
+DataType=0x0003
+AccessType=rww
+PDOMapping=1
+
+[6411subD]
+ParameterName=AnalogueOutput16[13]
+ObjectType=0x7
+DataType=0x0003
+AccessType=rww
+PDOMapping=1
+
+[6411subE]
+ParameterName=AnalogueOutput16[14]
+ObjectType=0x7
+DataType=0x0003
+AccessType=rww
+PDOMapping=1
+
+[6411subF]
+ParameterName=AnalogueOutput16[15]
+ObjectType=0x7
+DataType=0x0003
+AccessType=rww
+PDOMapping=1
+
+[6411sub10]
+ParameterName=AnalogueOutput16[16]
+ObjectType=0x7
+DataType=0x0003
+AccessType=rww
+PDOMapping=1
+
+[6411sub11]
+ParameterName=AnalogueOutput16[17]
+ObjectType=0x7
+DataType=0x0003
+AccessType=rww
+PDOMapping=1
+
+[6411sub12]
+ParameterName=AnalogueOutput16[18]
+ObjectType=0x7
+DataType=0x0003
+AccessType=rww
+PDOMapping=1
+
+[6411sub13]
+ParameterName=AnalogueOutput16[19]
+ObjectType=0x7
+DataType=0x0003
+AccessType=rww
+PDOMapping=1
+
+[6411sub14]
+ParameterName=AnalogueOutput16[20]
+ObjectType=0x7
+DataType=0x0003
+AccessType=rww
+PDOMapping=1
