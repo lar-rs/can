@@ -4,7 +4,7 @@ authors = ["Sascha Smolkov <sascha.smolkov@gmail.com>"]
 categories = ["linux", "automatic", "sensor"]
 description = "LAR process water analyzers"
 edition = "2018"
-keywords = ["sensor", "ndir", "co2", "airflow", "humidity", "pressure","pump","valve"]
+keywords = ["can", "socketcan", "co2", "airflow", "humidity", "pressure","pump","valve"]
 license = "Apache-2.0 OR MIT"
 readme = "README.md"
 repository = "https://github.com/lar-rs/lscan"
@@ -27,7 +27,7 @@ clap_flags= "0.4.0"
 cargo_toml = "0.8.0"
 ansi_term = "0.12.1"
 chrono = "0.4.9"
-# crossbeam = "0.7.2"
+crossbeam = "0.7.2"
 
 femme = "1.3.0"
 futures-timer = "2.0.0"
@@ -42,13 +42,17 @@ atty = "0.2.13"
 # net
 async-std  = { version = "1.0.1", features = ["unstable"] }
 async-log  = "2.0.0"
-# futures-preview = {version = "0.3.0-alpha.19", features = ["async-await"], optional = true } 
+futures-preview = {version = "0.3.0-alpha.19", features = ["async-await"], optional = true } 
 async-trait = "0.1.17"
 socketcan = "1.7.0"
 # socketcan = "*"
 # surf = { git = "https://github.com/rustasync/surf.git" }
+# tarpc = "*"
 jsonrpc-core = "14.0.3"
 jsonrpc-derive = "14.0.3"
+jsonrpc-ipc-server = "14.0.3"
+jsonrpc-core-client = "14.0.3"
+jsonrpc-tcp-server = "14.0.3"
 
 [dependencies.serde]
 features = ["derive"]

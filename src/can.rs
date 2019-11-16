@@ -5,25 +5,74 @@ use crate::{
     error::CanError,
 };
 use async_std::io;
-use bincode::{deserialize, serialize};
+// use bincode::{deserialize, serialize};
+use std::collections::BTreeMap;
+use std::cmp::{Ordering,Ord};
+
 // use serde_json::from_slice;
 
-#[derive(Serialize, Deserialize, PartialEq, Debug,Clone)]
-pub struct CanMsg {
+#[derive(Serialize,Deserialize,PartialEq,PartialOrd,Eq,Debug,Clone)]
+pub struct Addr {
     pub node: u32,
     pub index: u16,
     pub sub: u8,
-    pub data:Vec<u8>,
 }
+
+impl Addr {
+    pub fn new(node:u32,index:u16,sub:u8) -> Addr {
+        Addr {
+            node: node,
+            index: index,
+            sub: sub,
+        }
+    }
+}
+/// Cmp function
+impl Ord for Addr{
+    fn cmp(&self, other: &Self) -> Ordering {
+            self.node.cmp(&other.node)
+    }
+}
+
+#[derive(Serialize, Deserialize, PartialEq, Debug,Clone)]
+pub struct Data {
+    pub bytes: Vec<u8>,
+}
+
+impl From<Vec<u8>> for Data {
+    fn from(bytes: Vec<u8>) -> Self {
+        Data{
+            bytes: bytes,
+        }
+    }
+}
+
+#[derive(Serialize, Deserialize, PartialEq, Debug,Clone)]
+pub struct TxMsg {
+    pub addr: Addr,
+    pub data: Data,
+}
+#[derive(Serialize, Deserialize, PartialEq, Debug,Clone)]
+pub struct RxMsg {
+    pub addr: Addr,
+}
+
+
+
 pub struct  Can {
     socket: CANSocket,
+    data:   BTreeMap<Addr,Data>,
+
 }
+
 
 
 impl Can {
     pub fn new(socket:CANSocket) -> Self {
-        // socket.set_nonblocking(true)?;
-        Can { socket: socket}
+        Can{ 
+            socket: socket,
+            data: BTreeMap::new(),
+        }
     }
     pub fn open(iface: &'static str) -> Result<Can,CanError> {
         let socket = CANSocket::open(iface)?;
@@ -31,13 +80,13 @@ impl Can {
         Ok(can)
     }
 
-    pub fn read(&self, node:u32,index:u16,sub: u8) -> Result<Vec<u8>,CanError> {
+    pub fn read(&mut self, addr: Addr) -> Result<Vec<u8>,CanError> {
         let mut store = [0 as u8; 8];
-        let node = ((node & 0b0111_1111) | 0b0011_0000_0000) as u32;
+        let node = ((addr.node & 0b0111_1111) | 0b0011_0000_0000) as u32;
         store[0] = 0b0100_0000u8;
-        store[1] = index as u8 & 0b1111_1111u8;
-        store[2] = (index >> 8) as u8;
-        store[3] = sub;
+        store[1] = addr.index as u8 & 0b1111_1111u8;
+        store[2] = (addr.index >> 8) as u8;
+        store[3] = addr.sub;
         // let mut data_bits = BitSlice::<LittleEndian, u8>::from_slice_mut(&mut store);
         // data_bits.set(1,true);
         let mut data   = Vec::new();
@@ -57,15 +106,17 @@ impl Can {
                 store[0] ^= 0b0001_0000u8;
             }
         }
+        self.data.insert(addr,data.clone().into());
         Ok(data)
     }
-    pub fn write (&mut self, node: u32,index:u16,sub: u8, data: &[u8]) -> Result< Vec<u8>, CanError> {
+    pub fn write (&mut self,addr: Addr,tx:Data) -> Result<(),CanError> {
         let mut store = [0 as u8; 8];
-        let node = ((node & 0b0111_1111) | 0b0011_0000_0000) as u32;
+        let node = ((addr.node & 0b0111_1111) | 0b0011_0000_0000) as u32;
         // 0x19 0b0001_1001
         // 0x18 0b0001_1000
         // 0b0111_111 = 0x7F) | 0b0011_0000_0000 = 0x600) as u32;
-        let tx_data = Vec::new();
+        // let tx_data = Vec::new();
+        let data = tx.bytes.as_slice();
         match data.len() {
             0 => {
                 store[0] = 0x40;
@@ -98,9 +149,9 @@ impl Can {
                 store[5] = (x >> 8) as u8;
             }
         }
-        store[1] = index as u8 & 0b1111_1111u8;
-        store[2] = (index >> 8) as u8;
-        store[3] = sub;
+        store[1] = addr.index as u8 & 0b1111_1111u8;
+        store[2] = (addr.index >> 8) as u8;
+        store[3] = addr.sub;
         self.socket.write_frame(&CANFrame::new(node, &store, false, false)?)?;
 
         let rx_frame = self.socket.read_frame()?;
@@ -135,25 +186,18 @@ impl Can {
 
             }
         }
-
-        Ok(tx_data)
+        self.data.insert(addr,tx.clone());
+        Ok(())
     }
-    pub async fn transmit(&mut self,msg : CanMsg)-> io::Result<Vec<u8>> { 
-        if msg.data.len() > 0 {
-           let data = self.write(msg.node,msg.index,msg.sub, msg.data.as_slice())?;
-           return Ok(data);
-        } else {
-           self.read(msg.node,msg.index,msg.sub)?;
-        };
-        Ok(Vec::new())
+    /// transmit message.
+    pub async fn transmit(&mut self,msg:TxMsg)-> io::Result<()> { 
+        self.write(msg.addr,msg.data)?;
+        Ok(())
     }
-    pub async fn message(&mut self, data: Vec<u8>) -> io::Result<Vec<u8>> {
-         
-        let msg:CanMsg = match deserialize(&data) {
-            Ok(msg) => msg,
-            _ => serde_json::from_slice(&data)?,
-        };
-        self.transmit(msg).await
+    // recieve message.
+    pub async fn recieve(&mut self,msg:RxMsg) -> io::Result<Vec<u8>> {
+        let data = self.read(msg.addr)?;
+        Ok(data)
     }
 }
 
