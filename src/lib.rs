@@ -8,7 +8,7 @@ pub mod can;
 // pub mod check;
 // pub mod can4linux;
 pub mod rpc;
-pub mod tcp;
+pub mod server;
 
 // pub use self::error::CanError;
 // pub use self::can4linux as canbus;
