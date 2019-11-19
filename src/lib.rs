@@ -2,9 +2,11 @@
 ///
 
 pub mod error;
+pub mod config;
 pub mod cli;
 // pub mod rpc;
 pub mod can;
+
 // pub mod check;
 // pub mod can4linux;
 pub mod rpc;

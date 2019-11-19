@@ -38,6 +38,10 @@ pub enum CanError {
 }
 
 
+pub fn wrong_data(msg:String) -> CanError {
+    CanError::DataErr{ msg }
+}
+
 impl From<RpcError> for CanError {
     fn from(kind: RpcError) -> CanError {
         CanError::RpcError{err:kind}

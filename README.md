@@ -65,12 +65,20 @@
 
     To run the tests locally, though, setup should be simple:
 
+    Virtual device
     ```sh
     sudo modprobe vcan
     sudo ip link add vcan0 type vcan
     sudo ip link set vcan0 up
     cargo test
     ```
+    PCan usb device
+    ```sh
+    modprobe peak_usb 
+    sudo ip link set can0 up type can bitrate 500000
+    cargo test
+    ```
+
 
 ## JsonRPC API
 **protocol:**`jsonrpc`

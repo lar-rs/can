@@ -1,7 +1,6 @@
 use jsonrpc_derive::rpc;
 use jsonrpc_core::futures::future::{self, FutureResult};
 use super::*;
-use super::can::Can;
 
 
 
