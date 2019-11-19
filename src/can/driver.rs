@@ -10,7 +10,7 @@ use std::cmp::{Ordering,Ord};
 use lazy_static::lazy_static;
 
 use std::sync::{RwLock};
-
+use std::convert::TryInto;
 
 // use serde_json::from_slice;
 
@@ -77,6 +77,25 @@ impl From<u32> for Data {
         }
     }
 }
+impl Into<u8> for Data {
+    fn into(self) -> u8 {
+        let (int_bytes, _) = self.bytes.as_slice().split_at(std::mem::size_of::<u8>());
+        u8::from_le_bytes(int_bytes.try_into().unwrap())
+    }
+}
+
+impl Into<u16> for Data {
+    fn into(self) -> u16 {
+        let (int_bytes, _) = self.bytes.as_slice().split_at(std::mem::size_of::<u16>());
+        u16::from_le_bytes(int_bytes.try_into().unwrap())
+    }
+}
+impl Into<u32> for Data {
+    fn into(self) -> u32 {
+        let (int_bytes, _) = self.bytes.as_slice().split_at(std::mem::size_of::<u32>());
+        u32::from_le_bytes(int_bytes.try_into().unwrap())
+    }
+}
 
 lazy_static! {
     static ref DATA: RwLock<BTreeMap<Addr, Data>> = RwLock::new(BTreeMap::new());
@@ -113,7 +132,7 @@ impl Can {
         Ok(can)
     }
 
-    pub fn read(&self, addr: Addr) -> Result<Vec<u8>,CanError> {
+    pub fn read(&self, addr: Addr) -> Result<Data,CanError> {
         let mut store = [0 as u8; 8];
         let node = ((addr.node & 0b0111_1111) | 0b0011_0000_0000) as u32;
         store[0] = 0b0100_0000u8;
@@ -122,7 +141,7 @@ impl Can {
         store[3] = addr.sub;
         // let mut data_bits = BitSlice::<LittleEndian, u8>::from_slice_mut(&mut store);
         // data_bits.set(1,true);
-        let mut data   = Vec::new();
+        let mut data:Vec<u8>   = Vec::new();
         let  rx   = CANFrame::new(node, &store, false, false)?;
         self.socket.write_frame(&rx)?;
         let rx_frame = self.socket.read_frame()?;
@@ -139,10 +158,13 @@ impl Can {
                 store[0] ^= 0b0001_0000u8;
             }
         }
+        if data.len() < 4 {
+           data.resize(4, 0);
+        }
         incomming(addr,data.clone().into());
-        Ok(data)
+        Ok(data.into())
     }
-    pub fn write (&mut self,addr: Addr,tx:Data) -> Result<(),CanError> {
+    pub fn write (&self,addr: Addr,tx:Data) -> Result<(),CanError> {
         let mut store = [0 as u8; 8];
         let node = ((addr.node & 0b0111_1111) | 0b0011_0000_0000) as u32;
         // 0x19 0b0001_1001
@@ -222,7 +244,7 @@ impl Can {
         Ok(())
     }
     // recieve message.
-    pub async fn recieve(&mut self,msg:RxMsg) -> io::Result<Vec<u8>> {
+    pub async fn recieve(&mut self,msg:RxMsg) -> io::Result<Data> {
         let data = self.read(msg.addr)?;
         Ok(data)
     }

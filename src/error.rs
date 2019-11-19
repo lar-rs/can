@@ -67,6 +67,12 @@ impl From<CanError> for Error {
         Error::new(ErrorKind::Other, format!("can error - {}",canerr))
     }
 }
+
+impl From<CanError> for RpcError {
+    fn from(canerr:CanError) -> RpcError {
+        RpcError::internal_error()
+    }
+}
 // impl From<DBusError> for CanError {
     // fn from(kind:DBusError) -> CanError {
         // CanError::DBusError{err:kind}

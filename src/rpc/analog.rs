@@ -18,7 +18,7 @@ pub trait Analog {
     #[rpc(name = "analog_get_out")]
     fn analog_get_out(&self) -> Result<u16>;
     #[rpc(name = "analog_set_out")]
-    fn analog_set_out(&self,value: u16) -> Result<()>;
+    fn analog_set_out(&self,node:u32,value: u16) -> Result<()>;
      #[rpc(name = "analog_get_temp01")]
     fn analog_get_temp01(&self) -> Result<u16>;
      #[rpc(name = "analog_get_temp02")]

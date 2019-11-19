@@ -15,9 +15,9 @@ pub trait Msg{
 	// #[rpc(name = "protocolVersion")]
 	// fn protocol_version(&self) -> Result<String>;
     /// read data msg
-	#[rpc(name = "read")]
-    fn read(&self,node : i32,index: i32,sub: u8) -> Result<Data>;
+	#[rpc(name = "read_data")]
+    fn read_data(&self,node:u32,index:u16,sub:u8) -> Result<Data>;
     /// write msg
-    #[rpc(name = "write")]
-    fn write(&self,node:i32,index: i32,sub: u8,data: Data) -> Result<()>;
+    #[rpc(name = "write_data")]
+    fn write_data(&self,node:u32,index:u16,sub:u8,data: Data) -> Result<()>;
 }

@@ -13,15 +13,15 @@
 
 `lscan` is a CLI tool designed for setup and read ndir sensors data.
 
-  - ### `ipc`
+  - ### `tcp`
     ⚙️ run driver in a work dir
     All of the arguments and flags to this command are optional:
         - `path`: linux socket directory.
         - `dev`:  socket can interface `vcan0`
 
   - ### 🔧 `setup`
-    🔩 Configure can
-
+    🔩 Configure and start can driver
+        - `pcan`: peak_usb linux interface `can0`
 
 
 ## ⚓ Installation
