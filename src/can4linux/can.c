@@ -368,7 +368,7 @@ Err doppelmotor_set_uart01(int node,const char *data){
     if (data==NULL) return 11;
     frame.len = strlen((char*)data);
     strncpy((char*)frame.buf,data,256);
-    return  canframe(node,0x6010,0x1,&frame);
+    return  canframe(node,0x6000,0x1,&frame);
 }
 
 Err doppelmotor_set_uart02(int node,const char *data){

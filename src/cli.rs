@@ -1,9 +1,9 @@
 use clap_flags;
-use failure::ResultExt;
-use std::io;
-use std::path::PathBuf;
+// use failure::ResultExt;
+// use std::io;
+// use std::path::PathBuf;
 use structopt::StructOpt;
-use clap_flags::Log;
+// use clap_flags::Log;
 
 // use structopt::StructOpt;
 // use futures::prelude::*;

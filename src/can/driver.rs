@@ -96,6 +96,11 @@ impl Into<u32> for Data {
         u32::from_le_bytes(int_bytes.try_into().unwrap())
     }
 }
+impl Into<Vec<u8>> for Data {
+    fn into(self) -> Vec<u8> {
+        self.bytes.clone()
+    }
+}
 
 lazy_static! {
     static ref DATA: RwLock<BTreeMap<Addr, Data>> = RwLock::new(BTreeMap::new());
@@ -250,3 +255,10 @@ impl Can {
     }
 }
 
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn it_works() {
+    }
+}
