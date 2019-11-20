@@ -9,6 +9,7 @@ use toml;
  #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Config {
     pub iface: String,
+    pub bautrate: u32,
 }
 
 
@@ -17,6 +18,7 @@ impl Default for Config {
     fn  default() -> Config {
         Config {
             iface:"vcan".to_owned(),
+            bautrate: 125000,
         }
     }
 }

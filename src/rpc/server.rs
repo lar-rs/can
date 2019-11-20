@@ -1,29 +1,44 @@
-use crate::rpc::Msg;
-use crate::rpc::analog::Analog;
-use crate::rpc::aouts::AOuts;
-use crate::rpc::digital::Digital;
-use crate::rpc::motor::DoppelMotor;
+use serde::{Deserialize,Serialize};
+
+pub use super::Msg;
+pub use super::analog::Analog;
+pub use super::aouts::AOuts;
+pub use super::digital::Digital;
+pub use super::motor::DoppelMotor;
 use bitvec::prelude::*;
-
-
+use crate::can;
+use can::{CanRw,read_data,write_data};
 // use crate::rpc::motor as motor1;
 // use crate::rpc::motor as motor2;
-use super::*;
+use can::*;
 use jsonrpc_core::{Result};
 
+#[derive(Debug,Default, Clone, Serialize, Deserialize)]
+pub struct CanNode;
 
-impl Msg for Can {
+// impl CanRw for Node {
+    // const IFACE: &'static str = "can0";
+// }
+
+impl Msg for CanNode {
     fn read_data(&self,node:u32,index:u16,sub:u8) -> Result<Data> {
-        let data = self.read(Addr::new(node,index,sub))?;
+        let data = read_data("can0",Addr::new(node,index,sub))?;
         Ok(data)
     }
     fn write_data(&self,node:u32,index:u16,sub:u8,data: Data) -> Result<()>{
-		self.write(Addr::new(node,index,sub),data)?;
+		write_data("can0",Addr::new(node,index,sub),data)?;
 		Ok(())
     }
 }
 
-impl Analog for Can {
+#[derive(Debug,Default, Clone, Serialize, Deserialize)]
+pub struct AnalogNode;
+
+impl CanRw for AnalogNode {
+    const IFACE: &'static str = "can0";
+}
+
+impl Analog for AnalogNode {
     fn analog_get_in01(&self,node:u32) -> Result<u16> {
         let data = self.read(Addr::new(node,0x6100,0x1))?;
         Ok(data.into())
@@ -82,7 +97,14 @@ impl Analog for Can {
     }
 }
 
-impl AOuts for Can{
+
+pub struct AnalogOutputs;
+
+impl CanRw for AnalogOutputs {
+    const IFACE: &'static str = "can0";
+}
+
+impl AOuts for AnalogOutputs{
     fn outs_count(&self) -> Result<u8> {
         let data = self.read(Addr::new(0x1c,0x6411,0))?;
         Ok(data.into())
@@ -97,7 +119,13 @@ impl AOuts for Can{
     }
 }
 
-impl Digital for Can {
+pub struct DigitalNode;
+
+impl CanRw for DigitalNode {
+    const IFACE: &'static str = "can0";
+}
+
+impl Digital for DigitalNode {
     fn get_info(&self,node:u32) -> Result<String> {
         Ok(format!("Digitan Node {}",node))
     }
@@ -375,6 +403,12 @@ impl Digital for Can {
 
 
 
+pub struct MotorNode;
+
+impl CanRw for MotorNode {
+    const IFACE: &'static str = "can0";
+}
+
 /// Motor oder Doppelmotor
 /// 6X00:2 ParameterName=Endschalter, geschlossen=1 ObjectType=0x7 DataType=0x0002 AccessType=ro DefaultValue=0 PDOMapping=0
 /// 6X00:3 ParameterName=Endschalter invertieren ObjectType=0x7 DataType=0x0002 AccessType=rw DefaultValue=0 PDOMapping=0
@@ -401,7 +435,7 @@ impl Digital for Can {
 ///     0x004 - i16
 ///     0x006 - i16
 
-impl DoppelMotor for Can {
+impl DoppelMotor for MotorNode {
     fn get_info(&self,node:u32)-> Result<String>  {
         Ok(format!("DoppelMotor Node {}",node))
     }

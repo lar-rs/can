@@ -13,6 +13,10 @@ use std::sync::{RwLock};
 use std::convert::TryInto;
 
 // use serde_json::from_slice;
+use std::sync::Mutex;
+
+
+
 
 #[derive(Serialize,Deserialize,PartialEq,PartialOrd,Eq,Debug,Clone)]
 pub struct Addr {
@@ -104,6 +108,7 @@ impl Into<Vec<u8>> for Data {
 
 lazy_static! {
     static ref DATA: RwLock<BTreeMap<Addr, Data>> = RwLock::new(BTreeMap::new());
+    static ref CANBUS: Mutex<BTreeMap<&'static str,Can>> = Mutex::new(BTreeMap::new());
 }
 
 #[derive(Serialize, Deserialize, PartialEq, Debug,Clone)]
@@ -252,6 +257,31 @@ impl Can {
     pub async fn recieve(&mut self,msg:RxMsg) -> io::Result<Data> {
         let data = self.read(msg.addr)?;
         Ok(data)
+    }
+}
+
+pub fn read_data(iface:&'static str,addr:Addr) -> Result<Data,CanError> {
+    let mut canbus = CANBUS.lock().unwrap();
+    let data = canbus.entry(iface).or_insert(Can::open(iface)?).read(addr)?;
+    // let data = can.read(addr)?;
+    Ok(data)
+}
+
+pub fn write_data(iface:&'static str,addr:Addr,data:Data) -> Result<(),CanError> {
+    let mut canbus = CANBUS.lock().unwrap();
+    canbus.entry(iface).or_insert(Can::open(iface)?).write(addr,data)?;
+    // let data = can.read(addr)?;
+    Ok(())
+}
+
+pub trait CanRw{ 
+    const IFACE: &'static str;
+
+    fn read(&self, addr: Addr) -> Result<Data,CanError>{
+        read_data(Self::IFACE,addr)
+    }
+    fn write(&self, addr: Addr,tx:Data) -> Result<(),CanError>  {
+        write_data(Self::IFACE,addr,tx)
     }
 }
 

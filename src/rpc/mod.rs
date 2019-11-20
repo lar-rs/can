@@ -2,6 +2,7 @@ pub mod motor;
 pub mod analog;
 pub mod digital;
 pub mod aouts;
+pub mod server;
 
 use super::can::Data;
 use jsonrpc_core::futures::future::{Future};

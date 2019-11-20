@@ -31,6 +31,36 @@
 //         }
 //     })
 // }
+use lscan::cli::Args;
+// use lscan::banner;
+
+use async_log::span;
+use log::info;
+use async_std::io;
+use async_std::task;
+
+fn setup_logger() {
+    let logger = femme::pretty::Logger::new();
+    async_log::Logger::wrap(logger, || 12)
+        .start(log::LevelFilter::Trace)
+        .unwrap();
+}
+
+#[paw::main]
+fn main(args: Args) -> io::Result<()> {
+	lscan::banner::hello();
+    setup_logger();
+    // span!("new level, depth={}", 1, {
+    //     let x = "beep";
+    //     info!("look at this value, x={}", x);
+
+    //     span!("new level, depth={}", 2, {
+    //         let y = "boop";
+    //         info!("another nice value, y={}", y);
+    //     })
+    // });
+    task::block_on(args.command())
+}
 
 // fn setup_logger() {
     // let logger = femme::pretty::Logger::new();
@@ -46,47 +76,47 @@
     // Ok(())
 // }
 
-use jsonrpc_core;
+// use jsonrpc_core;
 
-use jsonrpc_core::futures::future::{self, FutureResult};
-use jsonrpc_core::{Error, IoHandler, Result};
-use jsonrpc_derive::rpc;
+// use jsonrpc_core::futures::future::{self, FutureResult};
+// use jsonrpc_core::{Error, IoHandler, Result};
+// use jsonrpc_derive::rpc;
 
-#[rpc]
-pub trait Rpc<One, Two> {
-	/// Get One type.
-	#[rpc(name = "getOne")]
-	fn one(&self) -> Result<One>;
+// #[rpc]
+// pub trait Rpc<One, Two> {
+// 	/// Get One type.
+// 	#[rpc(name = "getOne")]
+// 	fn one(&self) -> Result<One>;
 
-	/// Adds two numbers and returns a result
-	#[rpc(name = "setTwo")]
-	fn set_two(&self, a: Two) -> Result<()>;
+// 	/// Adds two numbers and returns a result
+// 	#[rpc(name = "setTwo")]
+// 	fn set_two(&self, a: Two) -> Result<()>;
 
-	/// Performs asynchronous operation
-	#[rpc(name = "beFancy")]
-	fn call(&self, a: One) -> FutureResult<(One, Two), Error>;
-}
+// 	/// Performs asynchronous operation
+// 	#[rpc(name = "beFancy")]
+// 	fn call(&self, a: One) -> FutureResult<(One, Two), Error>;
+// }
 
-struct RpcImpl;
+// struct RpcImpl;
 
-impl Rpc<u64, String> for RpcImpl {
-	fn one(&self) -> Result<u64> {
-		Ok(100)
-	}
+// impl Rpc<u64, String> for RpcImpl {
+// 	fn one(&self) -> Result<u64> {
+// 		Ok(100)
+// 	}
 
-	fn set_two(&self, x: String) -> Result<()> {
-		println!("{}", x);
-		Ok(())
-	}
+// 	fn set_two(&self, x: String) -> Result<()> {
+// 		println!("{}", x);
+// 		Ok(())
+// 	}
 
-	fn call(&self, num: u64) -> FutureResult<(u64, String), Error> {
-		crate::future::finished((num + 999, "hello".into()))
-	}
-}
+// 	fn call(&self, num: u64) -> FutureResult<(u64, String), Error> {
+// 		crate::future::finished((num + 999, "hello".into()))
+// 	}
+// }
 
-fn main() {
-	let mut io = IoHandler::new();
-	let rpc = RpcImpl;
+// fn main() {
+// 	let mut io = IoHandler::new();
+// 	let rpc = RpcImpl;
 
-	io.extend_with(rpc.to_delegate())
-}
+// 	io.extend_with(rpc.to_delegate())
+// }

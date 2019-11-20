@@ -2,7 +2,7 @@ use async_std::io;
 use async_std::path::PathBuf;
 use log::info;
 // use async_std::fs;
-use crate::rpi as os;
+// use crate::rpi as os;
 
 
 // use prettytable::{
@@ -29,11 +29,11 @@ pub struct Opt {
 
 impl Opt {
     pub async fn run(&self) -> io::Result<()> {
-        let dir = PathBuf::from(&self.path);
-        info!("run subcommand setup");
-        os::setup_config(&dir).await?;
-        os::enable_ssh(&dir).await?;
-        os::enable_wlan(&dir).await?;
+        // let dir = PathBuf::from(&self.path);
+        info!("subcommand setup");
+        // os::setup_config(&dir).await?;
+        // os::enable_ssh(&dir).await?;
+        // os::enable_wlan(&dir).await?;
         Ok(())
     }
 }
