@@ -42,6 +42,10 @@ pub fn wrong_data(msg:String) -> CanError {
     CanError::DataErr{ msg }
 }
 
+pub fn unknown_interface(msg:String) -> CanError {
+    CanError::CanDev{ msg }
+}
+
 impl From<RpcError> for CanError {
     fn from(kind: RpcError) -> CanError {
         CanError::RpcError{err:kind}

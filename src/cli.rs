@@ -14,7 +14,6 @@ use structopt::StructOpt;
 #[structopt(name = "Socketcan", about = "  🧰 An example of StructOpt usage.")]
 pub struct Args {
 
-    /// ⥄‍  device [vcan0,can0]
     #[structopt(short, long)]
     iface: String,
     /// 📢 subcommand to run.

@@ -3,7 +3,7 @@ pub mod server;
 
 use async_std::io;
 use structopt::StructOpt;
-use clap_flags;
+// use clap_flags;
 
 /// 📢 subcommands 
 #[derive(Debug, StructOpt)]
@@ -12,6 +12,7 @@ pub enum Command {
     Setup(setup::Opt),
     #[structopt(name = "server", about = "can rpc ✇ server run")]
     Server(server::Opt),
+
 }
 
 impl Command {

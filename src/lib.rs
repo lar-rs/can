@@ -1,4 +1,5 @@
 /// `lscan` socketcan api binding to rust and jsonrpc.
+/// 
 ///
 
 pub mod error;

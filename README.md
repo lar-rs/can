@@ -1,10 +1,10 @@
 #  🧰 `lscan`
 
- **📦  LAR linux socket can rewrited in [🦀 **Rust**](https://github.com/lar-rs/pwa-can)**
+ **📦  LAR linux socket can rewrited in [🦀 **Rust**](https://github.com/lar-rs/lscan)**
 
 🚧 _Work In Progress_ 🚧
 
-[![travis build Status](https://travis-ci.com/lar-rs/lscan.svg?branch=master)](https://travis-ci.com/lar-rs/miolfs)
+[![travis build Status](https://travis-ci.com/lar-rs/lscan.svg?branch=master)](https://travis-ci.com/lar-rs/lscan)
 [![open issue]][issue]
 ![Minimum Rust Version][min-rust-badge]
 
@@ -104,7 +104,6 @@
     ```
         dtparam=spi=on
         dtoverlay=mcp2515-can0,oscillator=16000000,interrupt=25
-        dtoverlay=mcp2515-can1,oscillator=16000000,interrupt=24
         dtoverlay=spi-bcm2835-overlay
     ```
     * Reboot	Pi: `sudo reboot`

@@ -16,48 +16,59 @@ cc = "1.0"
 cfg-if = "0.1.10"
 
 [dependencies]
+### cli|args
 structopt = { version = "0.3", features = [ "paw" ] }
 paw = "1.0"
+# clap_flags= "0.4.0"
+
+# cli|communication|check
+# atty = "0.2.13"
+
+# cli|fine|terminal
+ansi_term = "0.12.1"
+yansi = "0.5.0"
+
+## error|managment
 failure = "0.1.6"
 exitfailure = "0.5.1"
 human-panic = "1.0.1"
+
+## log
 log = "0.4.8"
-
-clap_flags= "0.4.0"
-cargo_toml = "0.8.0"
-ansi_term = "0.12.1"
-chrono = "0.4.9"
-crossbeam = "0.7.3"
-
 femme = "1.3.0"
-# futures-timer = "2.0.2"
-lazy_static = "1.4.0"
+
+# configuration|serialize
+toml = "0.5.5"
+
+# time|date
+chrono = "0.4.9"
+
+## value|bit
 bitvec = "0.15.2"
 
-rand = "0.7.2"
-serde_json = "1.0.41"
+## Serealizers
+serde = { version = "1.0", default-features = false, features = ["derive"] }
 bincode = "1.2.0"
-toml = "0.5.5"
-yansi = "0.5.0"
-atty = "0.2.13"
-# net
+# serde_json = "1.0.41"
+### driver|hardware
+socketcan = "1.7.0"
+
+### channels|async|net|static
+crossbeam = "0.7.3"
+lazy_static = "1.4.0"
 async-std  = { version = "1.0.1", features = ["unstable"] }
 async-log  = "2.0.0"
-# futures-preview = {version = "0.3.0-alpha.19", features = ["async-await"], optional = true } 
+# futures-preview = {version = "0.3.0-alpha.19", features = ["async-await"], optional = true }
 async-trait = "0.1.18"
-socketcan = "1.7.0"
-# socketcan = "*"
 # surf = { git = "https://github.com/rustasync/surf.git" }
-# tarpc = "*"
+
+### protocol|jsonrpc
 jsonrpc-core = "14.0.3"
 jsonrpc-derive = "14.0.3"
 jsonrpc-ipc-server = "14.0.3"
 jsonrpc-core-client = "14.0.3"
 jsonrpc-tcp-server = "14.0.3"
 
-[dependencies.serde]
-features = ["derive"]
-version = "1.0.102"
 
 # nom = "5.0.1"
 # bytes = "0.4.12"

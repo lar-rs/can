@@ -25,6 +25,10 @@ use structopt::StructOpt;
 ///  ✇ serve tcp/udp controller on net
 #[derive(Debug, StructOpt)]
 pub struct Opt {
+     /// ip addres
+    #[structopt(short = "a", long = "address", default_value = "127.0.0.1")]
+    iface: String,
+
     /// port number 
     #[structopt(short = "p", long = "port", env = "PORT", default_value = "6677")]
     port: u16,
