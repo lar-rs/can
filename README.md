@@ -1,44 +1,52 @@
-#  🧰 `lscan`
+#  :electric_plug: `lscan`
 
  **📦  LAR linux socket can rewrited in [🦀 **Rust**](https://github.com/lar-rs/lscan)**
 
 🚧 _Work In Progress_ 🚧
 
 [![travis build Status](https://travis-ci.com/lar-rs/lscan.svg?branch=master)](https://travis-ci.com/lar-rs/lscan)
-[![open issue]][issue]
+![open issue][issue]
 ![Minimum Rust Version][min-rust-badge]
 
 
 ## 🎙️ Commands
 
-`lscan` is a CLI tool designed for setup and read ndir sensors data.
-  - `iface`: socket can interface name default value `vcan0`.
+### `lscan`
 
-  - ### 🦀⚙️ `server`
+- `iface`: socket can interface name default value `vcan0`
+
+    - ⚙️ `server`
     ⚙️ run driver in a work dir
     All of the arguments and flags to this command are optional:
         - `address`: ip address default to `127.0.0.1`
         - `port`:  port default to `6677`
 
-  - ### 🔧 `setup`
-    🔩 Configure and start can driver
-        - `pcan`: peak_usb linux interface `can0`
+    - 🔧 `virtual`
+    🔩 Configure and start virtual can interface 
+        - `baurtate`: default to `500000`
 
 
 ## ⚓ Installation
 
-1. Install `cargo`:
+* Install `cargo`:
 
     Edinburgh is installed through [Cargo](https://github.com/rust-lang/cargo#compiling-from-source), a Rust package manager. Rustup, a tool for installing Rust, will also install Cargo. On Linux and macOS systems, `rustup` can be installed as follows:
 
-    ```
+    ```zsh
     curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain nightly
-    rustup toolchain install nightly
-    rustup default nightly
-    cargo build
-
     ```
-### PanelPC 
+    ```zsh
+    rustup toolchain install nightly
+    ```
+    ```zsh
+    rustup default nightly
+    ```
+    ```zsh
+    cargo build
+    ```
+
+* PanelPC 
+
     Additional installation methods are available [here](https://forge.rust-lang.org/other-installation-methods.html).
     Be sure to switch back to `stable` with `rustup default stable` if that's your preferred toolchain.
 
@@ -47,7 +55,7 @@
     with `rustup target add i686-unknown-linux-gnu`. Then you can
     cross-compile with `cargo`:
 
-    ```
+    ```zsh
     cargo build --release --target i686-unknown-linux-gnu
     ```
 
@@ -56,51 +64,74 @@
 
 ## Setup soketcan
 
-    Integrating the test into a CI system is non-trivial as it relies on a `vcan0` virtual can device existing.
-    Adding one to most linux systems is pretty easy with root access but attaching a vcan device to a container for CI seems difficult to find support for.
 
+    Integrating the test into a CI system is non-trivial as it relies on a `vcan0` virtual can device existing.
+    Adding one to most linux systems is pretty easy with root access but attaching a vcan device to a container for CI seems difficult to find support for
+    
     To run the tests locally, though, setup should be simple:
 
-    Virtual device
-    ```sh
-    sudo modprobe vcan
-    sudo ip link add vcan0 type vcan
-    sudo ip link set vcan0 up
-    cargo test
+    **Virtual device:**
 
-### PCan USB
+    * Linux modul activate:
+
+    ```zsh
+    sudo modprobe vcan
+    ```
+    * Link vcan device: 
+    ```zsh
+    sudo ip link add vcan0 type vcan
+    ```
+    * Activate interface:
+    ```zsh
+    sudo ip link set vcan0 up
+    ```
+
+## PCan USB
 
     PCan usb device `Peak`
-    ```sh
+    * Linux modul activate:
+    ```bash
     modprobe peak_usb 
+    ```
+    * Link vcan device: 
+    ```zsh
     sudo ip link set can0 up type can bitrate 500000
+    ```
+    * Activate interface:
+    ```zsh
     cargo test
     ``` 
 
-### PiCan2 for Raspberry
+## PiCan2 Raspberry
 
     It	is	best	to	start	with	a	brand	new	Raspbian	image.	Download	the	latest [raspbian](https://www.raspberrypi.org/downloads/raspbian/)
     After	first	time	boot	up,	do	an	update	and	upgrade	first.
+
+    ```zsh
+    sudo apt-get update
     ```
-        sudo apt-get update
-        sudo apt-get upgrade
-        sudo reboot
+    ```zsh
+    sudo apt-get upgrade
+    ```
+    ```zsh
+    sudo reboot
     ```
     * Add	the	overlays	by:
 
     ```
-        sudo nano /boot/config.txt
+    sudo nano /boot/config.txt
     ```
     
     * Add	these	3	lines	to	the	end	of	file:
 
     ``` 
-        dtparam=spi=on
-        dtoverlay=mcp2515-can0,oscillator=16000000,interrupt=25
-        dtoverlay=spi-bcm2835-overlay
+    dtparam=spi=on
+    dtoverlay=mcp2515-can0,oscillator=16000000,interrupt=25
+    dtoverlay=spi-bcm2835-overlay
     ```
 
     For	PiCAN2	Duo	add	these	4	lines	to	the	end	of	file:
+
     ```
         dtparam=spi=on
         dtoverlay=mcp2515-can0,oscillator=16000000,interrupt=25

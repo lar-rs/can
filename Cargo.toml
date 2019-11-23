@@ -45,6 +45,7 @@ chrono = "0.4.9"
 
 ## value|bit
 bitvec = "0.15.2"
+nom = "5.0.1"
 
 ## Serealizers
 serde = { version = "1.0", default-features = false, features = ["derive"] }

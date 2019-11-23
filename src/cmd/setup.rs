@@ -8,6 +8,7 @@ use std::process::Command;
 // use async_std::fs;
 // use crate::rpi as os;
 
+use crate::cli::Args;
 
 // use prettytable::{
     // Table,
@@ -27,12 +28,6 @@ pub async fn pican() -> io::Result<()> {
     Ok(())
 }
 
-pub async fn run_vcan()  -> io::Result<()> {
-    Command::new("modprobe") .arg("vcan").spawn().expect("modprobe command failed to start");
-    Command::new("ip").arg("link").arg("add").arg("vcan0").arg("type").arg("vcan").spawn().expect("ip link add vcan0 command failed to start");
-    Command::new("ip").arg("link").arg("set").arg("vcan0").arg("up").spawn().expect("ip link set vcan0 up command failed to start");
-    Ok(())
-}
 
 /// Setup pcan driver.
 pub async fn run_pcan() -> io::Result<()> {
@@ -47,34 +42,20 @@ pub async fn run_pcan() -> io::Result<()> {
 }
 
 
-/// setup system can divice may you neet root acces
+/// 🍱  virtual device setup 
 #[derive(Debug,StructOpt)]
-pub struct Opt {
-    ///device interface ⥄  [vcan0,can0]
-    #[structopt(short = "i", long = "iface")]
-    iface: String,
-    
-
+pub struct VCan{
+    /// ⏱  virtual can bitrate settitns
+    #[structopt(long = "bitraate", default_value = "500000" )]
+    bitrate: u64,
 }
 
-
-
-
-impl Opt {
-    pub async fn run(&self) -> io::Result<()> {
-        // let dir = PathBuf::from(&self.path);
-        info!("subcommand setup");
-        match self.iface.as_str() {
-            "vcan" => run_vcan().await,
-            _ => {
-                eprint!("unknown CAN interface {}",self.iface);
-                Ok(())
-            }
-        }
-        // os::setup_config(&dir).await?;
-        // os::enable_ssh(&dir).await?;
-        // os::enable_wlan(&dir).await?;
-        // Ok(())
+impl VCan {
+    pub async fn run(&self, cli:&Args) -> io::Result<()> {
+        log::info!("activate virtual can device {}",cli.interface());
+        Command::new("modprobe") .arg("vcan").spawn().expect("modprobe command failed to start");
+        Command::new("ip").arg("link").arg("add").arg("vcan0").arg("type").arg("vcan").spawn().expect("ip link add vcan0 command failed to start");
+        Command::new("ip").arg("link").arg("set").arg("vcan0").arg("up").spawn().expect("ip link set vcan0 up command failed to start");
+        Ok(())
     }
 }
-

@@ -7,92 +7,129 @@ pub use super::digital::Digital;
 pub use super::motor::DoppelMotor;
 use bitvec::prelude::*;
 use crate::can;
-use can::{CanRw,read_data,write_data};
+use can::{SharedCan};
+use crate::error::CanError;
 // use crate::rpc::motor as motor1;
 // use crate::rpc::motor as motor2;
 use can::*;
 use jsonrpc_core::{Result};
 
-#[derive(Debug,Default, Clone, Serialize, Deserialize)]
-pub struct CanNode;
+use lazy_static::lazy_static;
 
-// impl CanRw for Node {
-    // const IFACE: &'static str = "can0";
+lazy_static!{
+    static ref CANBUS: SharedCan = SharedCan::open("vcan0").unwrap();
+}
+
+pub fn candevice() -> Result<Can> {
+    let can = Can::open("vcan0")?;
+    Ok(can)
+}
+// fn read_data(addr:&Addr) -> Result<Data,CanError> {
+    // let data = CANBUS.read(addr)?;
+    // Ok(data)
 // }
+
+// fn write_data(iface:String,addr:Addr,data:Data) -> Result<(),CanError> {
+//     let mut canbus = CANBUS.lock().unwrap();
+//     canbus.entry(iface).or_insert(Can::open(&iface)?).write(addr,data)?;
+//     incomming(addr,data);
+//     // let data = can.read(addr)?;
+//     Ok(())
+// }
+
+pub fn can0_read(addr:&Addr) -> Result<Data>{
+    let data = candevice()?.read(addr)?;
+    Ok(data)
+}
+fn can0_write(addr:&Addr,data:&Data) -> Result<()>{
+    candevice()?.write(addr,data)?;
+    Ok(())
+}
+
+pub struct CanNode(&'static Can);
+
+impl CanNode {
+    pub fn new(can: &'static Can) -> Self {
+        CanNode(can)
+    }
+}
 
 impl Msg for CanNode {
     fn read_data(&self,node:u32,index:u16,sub:u8) -> Result<Data> {
-        let data = read_data("can0",Addr::new(node,index,sub))?;
+        let data = can0_read(&Addr::new(node,index,sub))?;
         Ok(data)
     }
     fn write_data(&self,node:u32,index:u16,sub:u8,data: Data) -> Result<()>{
-		write_data("can0",Addr::new(node,index,sub),data)?;
+		can0_write(&Addr::new(node,index,sub),&data)?;
 		Ok(())
     }
 }
 
-#[derive(Debug,Default, Clone, Serialize, Deserialize)]
+// pub struct CanBus(&'a Can)
+
 pub struct AnalogNode;
 
-impl CanRw for AnalogNode {
-    const IFACE: &'static str = "can0";
-}
+// impl AnalogNode {
+//     pub fn new(can:SharedCan) -> Self {
+//         AnalogNode(can)
+//     }
+// }
 
 impl Analog for AnalogNode {
     fn analog_get_in01(&self,node:u32) -> Result<u16> {
-        let data = self.read(Addr::new(node,0x6100,0x1))?;
+        let data = can0_read(&Addr::new(node,0x6100,0x1))?;
         Ok(data.into())
     }
     fn analog_get_in02(&self,node:u32) -> Result<u16> {
-        let data = self.read(Addr::new(node,0x6100,0x2))?;
+        let data = can0_read(&Addr::new(node,0x6100,0x2))?;
         Ok(data.into())
     }
     fn analog_get_in03(&self,node:u32) -> Result<u16> {
-        let data = self.read(Addr::new(node,0x6100,0x3))?;
+        let data = can0_read(&Addr::new(node,0x6100,0x3))?;
         Ok(data.into())
     }
     fn analog_get_in04(&self,node:u32) -> Result<u16> {
-        let data = self.read(Addr::new(node,0x6100,0x4))?;
+        let data = can0_read(&Addr::new(node,0x6100,0x4))?;
         Ok(data.into())
     }
     fn analog_get_in05(&self,node:u32) -> Result<u16> {
-        let data = self.read(Addr::new(node,0x6110,0x1))?;
+        let data = can0_read(&Addr::new(node,0x6110,0x1))?;
         Ok(data.into())
     }
     fn analog_get_out(&self,node:u32) -> Result<u16> {
-        let data = self.read(Addr::new(node,0x6111,0x1))?;
+        let data = can0_read(&Addr::new(node,0x6111,0x1))?;
         Ok(data.into())
     }
     fn analog_set_out(&self,node:u32,value: u16) -> Result<()> {
-        self.write(Addr::new(node,0x6111,1),value.into())?;
+        can0_write(&Addr::new(node,0x6111,1),&value.into())?;
         Ok(())
     }
     fn analog_get_temp01(&self,node:u32) -> Result<u16> {
-        let data = self.read(Addr::new(node,0x6021,0x1))?;
+        let data = can0_read(&Addr::new(node,0x6021,0x1))?;
         Ok(data.into())
     }
     fn analog_get_temp02(&self,node:u32) -> Result<u16> {
-        let data = self.read(Addr::new(node,0x6021,0x1))?;
+        let data = can0_read(&Addr::new(node,0x6021,0x1))?;
         Ok(data.into())
     }
     fn analog_get_temp03(&self,node:u32) -> Result<u16> {
-        let data = self.read(Addr::new(node,0x6021,0x3))?;
+        let data = can0_read(&Addr::new(node,0x6021,0x3))?;
         Ok(data.into())
     }
     fn analog_get_uart01(&self,node:u32) -> Result<Vec<u8>> {
-        let data = self.read(Addr::new(node,0x6000,0x1))?;
+        let data = can0_read(&Addr::new(node,0x6000,0x1))?;
         Ok(data.into())
     }
     fn analog_get_uart02(&self,node:u32) -> Result<Vec<u8>> {
-        let data = self.read(Addr::new(node,0x6010,0x1))?;
+        let data = can0_read(&Addr::new(node,0x6010,0x1))?;
         Ok(data.into())
     }
     fn analog_set_uart01(&self,node:u32,data:Vec<u8>) -> Result<()> {
-        self.write(Addr::new(node,0x6000,0x1),data.into())?;
+        can0_write(&Addr::new(node,0x6000,0x1),&data.into())?;
         Ok(())
     }
     fn analog_set_uart02(&self,node:u32,data:Vec<u8>) -> Result<()> {
-        self.write(Addr::new(node,0x6010,0x1),data.into())?;
+        can0_write(&Addr::new(node,0x6010,0x1),&data.into())?;
         Ok(())
     }
 }
@@ -100,45 +137,49 @@ impl Analog for AnalogNode {
 
 pub struct AnalogOutputs;
 
-impl CanRw for AnalogOutputs {
-    const IFACE: &'static str = "can0";
-}
+// impl AnalogOutputs {
+    // pub fn new(can: &'static Can) -> Self {
+        // Self(can)
+    // }
+// }
 
 impl AOuts for AnalogOutputs{
     fn outs_count(&self) -> Result<u8> {
-        let data = self.read(Addr::new(0x1c,0x6411,0))?;
+        let data = can0_read(&Addr::new(0x1c,0x6411,0))?;
         Ok(data.into())
     }
     fn get_outs(&self, num: u8) -> Result<u16> {
-        let data = self.read(Addr::new(0x1c,0x6411,num))?;
+        let data = can0_read(&Addr::new(0x1c,0x6411,num))?;
         Ok(data.into())
     }
     fn set_outs(&self, num: u8, val: u16) -> Result<()>{
-        self.write(Addr::new(0x1c,0x6411,num),val.into())?;
+        can0_write(&Addr::new(0x1c,0x6411,num),&val.into())?;
         Ok(())
     }
 }
 
 pub struct DigitalNode;
 
-impl CanRw for DigitalNode {
-    const IFACE: &'static str = "can0";
-}
+// impl DigitalNode {
+    // pub fn new(can: &'static Can) -> Self {
+        // Self(can)
+    // }
+// }
 
 impl Digital for DigitalNode {
     fn get_info(&self,node:u32) -> Result<String> {
         Ok(format!("Digitan Node {}",node))
     }
     fn get_inputs(&self, node:u32) -> Result<u16> {
-        let data = self.read(Addr::new(node,0x6100,0x1))?;
+        let data = can0_read(&Addr::new(node,0x6100,0x1))?;
         Ok(data.into())
     }
     fn get_outputs(&self, node:u32) ->Result<u16> {
-        let data = self.read(Addr::new(node,0x6101,0x1))?;
+        let data = can0_read(&Addr::new(node,0x6101,0x1))?;
         Ok(data.into())
     }
     fn set_outputs(&self,node:u32,value:u16) -> Result<()>{
-        self.write(Addr::new(node,0x6101,0x1),value.into())?;
+        can0_write(&Addr::new(node,0x6101,0x1),&value.into())?;
         Ok(())
     }
     fn get_input00(&self, node:u32) ->Result<bool> {
@@ -405,9 +446,11 @@ impl Digital for DigitalNode {
 
 pub struct MotorNode;
 
-impl CanRw for MotorNode {
-    const IFACE: &'static str = "can0";
-}
+// impl MotorNode {
+//     pub fn new(can: &'static Can) -> Self {
+//         Self(can)
+//     }
+// }
 
 /// Motor oder Doppelmotor
 /// 6X00:2 ParameterName=Endschalter, geschlossen=1 ObjectType=0x7 DataType=0x0002 AccessType=ro DefaultValue=0 PDOMapping=0
@@ -440,28 +483,28 @@ impl DoppelMotor for MotorNode {
         Ok(format!("DoppelMotor Node {}",node))
     }
     fn get_uart01(&self,node:u32)-> Result<Vec<u8>> {
-        let data = self.read(Addr::new(node,0x6000,0x1))?;
+        let data = can0_read(&Addr::new(node,0x6000,0x1))?;
         Ok(data.into())
     }
 
     fn get_uart02(&self,node:u32)-> Result<Vec<u8>> {
-        let data = self.read(Addr::new(node,0x6010,0x1))?;
+        let data = can0_read(&Addr::new(node,0x6010,0x1))?;
         Ok(data.into())
     }
     fn set_uart01(&self,node:u32,data:Vec<u8>)-> Result<()> {
-        self.write(Addr::new(node,0x6000,0x1),data.into())?;
+        can0_write(&Addr::new(node,0x6000,0x1),&data.into())?;
         Ok(())
     }
     fn set_uart02(&self,node:u32,data:Vec<u8>)-> Result<()> {
-        self.write(Addr::new(node,0x6010,0x1),data.into())?;
+        can0_write(&Addr::new(node,0x6010,0x1),&data.into())?;
         Ok(())
     }
     fn set_baut01(&self,node:u32,bautrate:u32)-> Result<()> {
-        self.write(Addr::new(node,0x6000,0x4),bautrate.into())?;
+        can0_write(&Addr::new(node,0x6000,0x4),&bautrate.into())?;
         Ok(())
     }
     fn set_baut02(&self,node:u32,bautrate:u32)-> Result<()> {
-        self.write(Addr::new(node,0x6010,0x4),bautrate.into())?;
+        can0_write(&Addr::new(node,0x6010,0x4),&bautrate.into())?;
         Ok(())
     }
 
@@ -475,33 +518,33 @@ impl DoppelMotor for MotorNode {
     /// 
     /// A 0x1 ParameterName=Stepper=0, Stirrer =1 ObjectType=0x7 DataType=0x0002 AccessType=rw DefaultValue=1 PDOMapping=0
     fn set_option1(&self,node:u32,value:u8) -> Result<()> {
-        self.write(Addr::new(node,0x6100,0x1),value.into())?;
+        can0_write(&Addr::new(node,0x6100,0x1),&value.into())?;
         Ok(())
     }
     /// B 0x1 ParameterName=Stepper=0, Stirrer =1 ObjectType=0x7 DataType=0x0002 AccessType=rw DefaultValue=1 PDOMapping=0
     fn set_option2(&self,node:u32,value:u8) -> Result<()> {
-        self.write(Addr::new(node,0x6200,0x1),value.into())?;
+        can0_write(&Addr::new(node,0x6200,0x1),&value.into())?;
         Ok(())
     }
     /// A 0x2 - ParameterName=Endschalter, geschlossen=1 ObjectType=0x7 DataType=0x0002 AccessType=ro DefaultValue=0 PDOMapping=0
     fn get_endschalter1(&self,node:u32) -> Result<u8>{
-        let data = self.read(Addr::new(node,0x6100,0x2))?;
+        let data = can0_read(&Addr::new(node,0x6100,0x2))?;
         Ok(data.into())
     }
     /// B 0x2 - ParameterName=Endschalter, geschlossen=1 ObjectType=0x7 DataType=0x0002 AccessType=ro DefaultValue=0 PDOMapping=0
     fn get_endschalter2(&self,node:u32) -> Result<u8> {
-        let data = self.read(Addr::new(node,0x6200,0x2))?;
+        let data = can0_read(&Addr::new(node,0x6200,0x2))?;
         Ok(data.into())
          
     }
     /// A 0x2 - ParameterName=Endschalter, geschlossen=1 ObjectType=0x7 DataType=0x0002 AccessType=ro DefaultValue=0 PDOMapping=0
     fn invert_endschalter1(&self,node:u32,value:u8) -> Result<()> {
-        self.write(Addr::new(node,0x6100,0x3),value.into())?;
+        can0_write(&Addr::new(node,0x6100,0x3),&value.into())?;
         Ok(())
     }
     /// B 0x2 - ParameterName=Endschalter, geschlossen=1 ObjectType=0x7 DataType=0x0002 AccessType=ro DefaultValue=0 PDOMapping=0
     fn invert_endschalter2(&self,node:u32,value:u8) -> Result<()> {
-        self.write(Addr::new(node,0x6200,0x3),value.into())?;
+        can0_write(&Addr::new(node,0x6200,0x3),&value.into())?;
         Ok(())
     }
 
@@ -518,54 +561,54 @@ impl DoppelMotor for MotorNode {
     ///   wo 1- , 2 - , 3 - , 4 - 
     /// A 0x1 - ParameterName=Command / Status 0/1 ObjectType=0x7 DataType=0x0002 AccessType=rw DefaultValue=0 PDOMapping=0
     fn set_command1(&self,node:u32,cmd:u8) -> Result<()> {
-        self.write(Addr::new(node,0x6101,0x1),cmd.into())?;
+        can0_write(&Addr::new(node,0x6101,0x1),&cmd.into())?;
         Ok(())
     }
     /// B 0x1 - ParameterName=Command / Status 0/1 ObjectType=0x7 DataType=0x0002 AccessType=rw DefaultValue=0 PDOMapping=0
     fn set_command2(&self,node:u32,cmd:u8) -> Result<()> {
-        self.write(Addr::new(node,0x6201,0x1),cmd.into())?;
+        can0_write(&Addr::new(node,0x6201,0x1),&cmd.into())?;
         Ok(())
     }
     /// A 0x2 - ParameterName=Command  go to Pos ObjectType=0x7 DataType=0x0006 AccessType=rw DefaultValue=0 PDOMapping=0
     fn goto_position1(&self,node:u32,pos:u16) -> Result<()> {
-        self.write(Addr::new(node,0x6101,0x2),pos.into())?;
+        can0_write(&Addr::new(node,0x6101,0x2),&pos.into())?;
         Ok(())
     }
     /// B 0x2 - ParameterName=Command  go to Pos ObjectType=0x7 DataType=0x0006 AccessType=rw DefaultValue=0 PDOMapping=0
     fn goto_position2(&self,node:u32,pos:u16) -> Result<()> {
-        self.write(Addr::new(node,0x6201,0x2),pos.into())?;
+        can0_write(&Addr::new(node,0x6201,0x2),&pos.into())?;
         Ok(())
     }
     /// A 0x3 - ParameterName=Command  go to Pos ObjectType=0x7 DataType=0x0006 AccessType=rw DefaultValue=0 PDOMapping=0
     fn get_position1(&self,node:u32) -> Result<u16> {
-        let data = self.read(Addr::new(node,0x6101,0x2))?;
+        let data = can0_read(&Addr::new(node,0x6101,0x2))?;
         Ok(data.into())
          
     }
     /// B 0x3 - ParameterName=Command  go to Pos ObjectType=0x7 DataType=0x0006 AccessType=rw DefaultValue=0 PDOMapping=0
     fn get_position2(&self,node:u32) -> Result<u16> {
-        let data = self.read(Addr::new(node,0x6201,0x2))?;
+        let data = can0_read(&Addr::new(node,0x6201,0x2))?;
         Ok(data.into())
          
     }
     /// A 0x4 - ParameterName=Max Position ObjectType=0x7 DataType=0x0006 AccessType=rw DefaultValue=1800 PDOMapping=0
     fn set_max_position1(&self,node:u32,max:u16) -> Result<()> {
-        self.write(Addr::new(node,0x6101,0x4),max.into())?;
+        can0_write(&Addr::new(node,0x6101,0x4),&max.into())?;
         Ok(())
     }
     /// B 0x4 - ParameterName=Max Position ObjectType=0x7 DataType=0x0006 AccessType=rw DefaultValue=1800 PDOMapping=0
     fn set_max_position2(&self,node:u32,max:u16) -> Result<()> {
-        self.write(Addr::new(node,0x6201,0x4),max.into())?;
+        can0_write(&Addr::new(node,0x6201,0x4),&max.into())?;
         Ok(())
     }
     /// A 0x5  - ParameterName=Fahrparameter ObjectType=0x7 DataType=0x0002 AccessType=rw DefaultValue=1 PDOMapping=0
     fn set_velocity1(&self,node:u32,velocity:u8) -> Result<()> {
-        self.write(Addr::new(node,0x6101,0x5),velocity.into())?;
+        can0_write(&Addr::new(node,0x6101,0x5),&velocity.into())?;
         Ok(())
     }
     /// B 0x5  - ParameterName=Fahrparameter ObjectType=0x7 DataType=0x0002 AccessType=rw DefaultValue=1 PDOMapping=0
     fn set_velocity2(&self,node:u32,velocity:u8) -> Result<()> {
-        self.write(Addr::new(node,0x6201,0x5),velocity.into())?;
+        can0_write(&Addr::new(node,0x6201,0x5),&velocity.into())?;
         Ok(())
     }
 
@@ -582,14 +625,14 @@ impl DoppelMotor for MotorNode {
     /// set current for A
     /// A `0x1` - ParameterName=Stromsollwert / mA ObjectType=0x7 DataType=0x0006 AccessType=rw DefaultValue=600 PDOMapping=0
     fn set_stromsollwert1(&self,node:u32,value:u16) -> Result<()> {
-        self.write(Addr::new(node,0x6103,0x1),value.into())?;
+        can0_write(&Addr::new(node,0x6103,0x1),&value.into())?;
         Ok(())
     }
 
     /// set current for B
     /// B `0x1` - ParameterName=Stromsollwert / mA ObjectType=0x7 DataType=0x0006 AccessType=rw DefaultValue=600 PDOMapping=0
     fn set_stromsollwert2(&self,node:u32,value:u16) -> Result<()> {
-        self.write(Addr::new(node,0x6203,0x1),value.into())?;
+        can0_write(&Addr::new(node,0x6203,0x1),&value.into())?;
         Ok(())
     }
     /// A `6102` - ParameterName=Ruhrer 1 ObjectType=0x8 SubNumber=3
@@ -601,23 +644,23 @@ impl DoppelMotor for MotorNode {
     /// start|stop stirrer1
     /// A      1 - ParameterName=Aus=0, Ein=1 ObjectType=0x7 DataType=0x0002 AccessType=rw DefaultValue=1 PDOMapping=0
     fn set_stirrer1(&self,node:u32,value: u8) -> Result<()> {
-        self.write(Addr::new(node,0x6102,0x1),value.into())?;
+        can0_write(&Addr::new(node,0x6102,0x1),&value.into())?;
         Ok(())
     }
     /// start|stop stirrer2
     /// b      1 - ParameterName=Aus=0, Ein=1 ObjectType=0x7 DataType=0x0002 AccessType=rw DefaultValue=1 PDOMapping=0
      fn set_stirrer2(&self,node:u32,value: u8) -> Result<()> {
-        self.write(Addr::new(node,0x6202,0x1),value.into())?;
+        can0_write(&Addr::new(node,0x6202,0x1),&value.into())?;
         Ok(())
     }
     /// A   2 - ParameterName=Delay ObjectType=0x7 DataType=0x0002 AccessType=rw DefaultValue=-126 PDOMapping=0
     fn set_delay1(&self,node:u32,delay:u8) -> Result<()> {
-        self.write(Addr::new(node,0x6102,0x2),delay.into())?;
+        can0_write(&Addr::new(node,0x6102,0x2),&delay.into())?;
         Ok(())
     }
     /// A   2 - ParameterName=Delay ObjectType=0x7 DataType=0x0002 AccessType=rw DefaultValue=-126 PDOMapping=0
     fn set_delay2(&self,node:u32,delay:u8) -> Result<()> {
-        self.write(Addr::new(node,0x6202,0x2),delay.into())?;
+        can0_write(&Addr::new(node,0x6202,0x2),&delay.into())?;
         Ok(())
     }
 }

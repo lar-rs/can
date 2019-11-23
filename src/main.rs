@@ -32,16 +32,24 @@
 //     })
 // }
 use lscan::cli::Args;
+// use async_log::{instrument, span};
+// use log::info;
 // use lscan::banner;
 
 // use async_log::span;
 // use log::info;
 use async_std::io;
 use async_std::task;
-use femme;
+use yansi::Paint;
+
+/// setup logger use femme;
 fn setup_logger() {
+    let logger = femme::pretty::Logger::new();
+    async_log::Logger::wrap(logger, || /* get the task id here */ 0)
+        .start(log::LevelFilter::Info)
+        .unwrap();
     // let logger = femme::pretty::Logger::new();
-    femme::start(log::LevelFilter::Trace).unwrap();
+    // femme::start(log::LevelFilter::Trace).unwrap();
     // async_log::Logger::wrap(logger, || 12)
         // .start(log::LevelFilter::Trace)
         // .unwrap();
@@ -49,8 +57,7 @@ fn setup_logger() {
 
 #[paw::main]
 fn main(args: Args) -> io::Result<()> {
-	lscan::banner::hello();
+    println!("{}",Paint::blue(lscan::banner::NAME));
     setup_logger();
-    femme::start(log::LevelFilter::Trace).unwrap();
     task::block_on(args.command())
 }

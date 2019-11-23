@@ -15,6 +15,7 @@ use log::info;
 // use async_std::prelude::*;
 // use async_std::task;
 use async_std::io;
+use crate::can::Can;
 use crate::rpc::*;
 use crate::rpc::server::*;
 
@@ -25,10 +26,6 @@ use structopt::StructOpt;
 ///  ✇ serve tcp/udp controller on net
 #[derive(Debug, StructOpt)]
 pub struct Opt {
-     /// ip addres
-    #[structopt(short = "a", long = "address", default_value = "127.0.0.1")]
-    iface: String,
-
     /// port number 
     #[structopt(short = "p", long = "port", env = "PORT", default_value = "6677")]
     port: u16,
@@ -38,20 +35,21 @@ pub struct Opt {
 }
 
 impl Opt {
-    pub async fn run(&self, iface:&str) -> io::Result<()> {
+    pub async fn run(&self) -> io::Result<()> {
         info!("Start rpc server {}:{}",self.port,self.address);
         // task::block_on(async {
             let mut io = IoHandler::default();
-            let msg = CanNode;
-            let analog = AnalogNode;
-            let digital = DigitalNode;
-            let aouts   = AnalogOutputs;
-            let motor   = MotorNode;
-            io.extend_with(msg.to_delegate());
-            io.extend_with(analog.to_delegate());
-            io.extend_with(digital.to_delegate());
-            io.extend_with(aouts.to_delegate());
-            io.extend_with(motor.to_delegate());
+            // static ref can = Can::open(&self.iface)?;
+            // let msg = CanNode::new(&'static can);
+            // let analog = AnalogNode::new(&can);
+            // let digital = DigitalNode::new(&can);
+            // let aouts   = AnalogOutputs::new(&can);
+            // let motor   = MotorNode::new(&can);
+            // io.extend_with(msg.to_delegate());
+            // io.extend_with(analog.to_delegate());
+            // io.extend_with(digital.to_delegate());
+            // io.extend_with(aouts.to_delegate());
+            // io.extend_with(motor.to_delegate());
             let server = ServerBuilder::new(io)
                 .start(&SocketAddr::new(self.address.parse().unwrap(),self.port))
                 .expect("Server must start with no issues");
