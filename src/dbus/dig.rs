@@ -15,8 +15,8 @@ pub struct DigIN<'a> {
 
 
 impl<'a> DigIN<'a> {
-    /// Create new Dingital node 
-    /// for example Message::new_method_call( "com.lar.service.can", self.node.as_str(), "com.lar.nodes.Digital16", "GetDigitalIn").unwrap().append1(self.input) 
+    /// Create new Dingital node
+    /// for example Message::new_method_call( "com.lar.service.can", self.node.as_str(), "com.lar.nodes.Digital16", "GetDigitalIn").unwrap().append1(self.input)
     pub fn new(conn:&Connection,node:String,input:u32) -> DigIN{
         DigIN{conn,node,input}
     }
@@ -37,7 +37,7 @@ impl<'a> InputPin for DigIN<'a> {
         let digin = self.is_high()?;
         Ok(!digin)
     }
-}  
+}
 
 pub struct DigOUT<'a> {
     conn:  &'a Connection,
@@ -46,9 +46,9 @@ pub struct DigOUT<'a> {
 }
 
 impl<'a> DigOUT<'a> {
-    /// Create new Dingital node  
-    /// 
-    /// for example 
+    /// Create new Dingital node
+    ///
+    /// for example
     /// for example Message::new_method_call( "com.lar.service.can", self.node.as_str(), "com.lar.nodes.Digital16", "SetDigitalOut").unwrap().append2(self.output,true)
     /// for example Message::new_method_call( "com.lar.service.can", self.node.as_str(), "com.lar.nodes.Digital16", "GetDigitalOut").unwrap().append1(self.output)
     pub fn new(conn:&Connection,node:String,output:u32) -> DigOUT {
@@ -94,6 +94,59 @@ impl<'a> InputPin for DigOUT<'a> {
 }
 
 
+pub struct DigitalNode<'a> {
+    pub node: u32,
+    pub din: [DigIN<'a>;16],
+    pub dout: [DigOUT<'a>;16],
+}
+
+impl <'a> DigitalNode<'a> {
+    pub fn new(c:&Connection,node: u32) -> DigitalNode{
+
+        let node_path = match node {
+            0x18 => format!("/com/lar/nodes/Digital1"),
+            0x19 => format!("/com/lar/nodes/Digital2"),
+            _    => format!("/com/lar/nodes/Digital1"),
+        };
+        let din = [
+            DigIN::new(c,node_path.clone(),1),
+            DigIN::new(c,node_path.clone(),2),
+            DigIN::new(c,node_path.clone(),3),
+            DigIN::new(c,node_path.clone(),4),
+            DigIN::new(c,node_path.clone(),5),
+            DigIN::new(c,node_path.clone(),6),
+            DigIN::new(c,node_path.clone(),7),
+            DigIN::new(c,node_path.clone(),8),
+            DigIN::new(c,node_path.clone(),9),
+            DigIN::new(c,node_path.clone(),10),
+            DigIN::new(c,node_path.clone(),11),
+            DigIN::new(c,node_path.clone(),12),
+            DigIN::new(c,node_path.clone(),13),
+            DigIN::new(c,node_path.clone(),14),
+            DigIN::new(c,node_path.clone(),15),
+            DigIN::new(c,node_path.clone(),16),
+        ];
+        let dout = [
+            DigOUT::new(c,node_path.clone(),1),
+            DigOUT::new(c,node_path.clone(),2),
+            DigOUT::new(c,node_path.clone(),3),
+            DigOUT::new(c,node_path.clone(),4),
+            DigOUT::new(c,node_path.clone(),5),
+            DigOUT::new(c,node_path.clone(),6),
+            DigOUT::new(c,node_path.clone(),7),
+            DigOUT::new(c,node_path.clone(),8),
+            DigOUT::new(c,node_path.clone(),9),
+            DigOUT::new(c,node_path.clone(),10),
+            DigOUT::new(c,node_path.clone(),11),
+            DigOUT::new(c,node_path.clone(),12),
+            DigOUT::new(c,node_path.clone(),13),
+            DigOUT::new(c,node_path.clone(),14),
+            DigOUT::new(c,node_path.clone(),15),
+            DigOUT::new(c,node_path.clone(),16),
+        ];
+        DigitalNode { node , din, dout}
+    }
+}
 
 
 

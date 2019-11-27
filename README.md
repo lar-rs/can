@@ -1,6 +1,6 @@
 #  :electric_plug: `can`
 
- **📦  LAR linux socket can rewrited in [🦀 **Rust**](https://github.com/lar-rs/can)**
+ **📦  LAR linux can support rewrited in [🦀 **Rust**](https://github.com/lar-rs/can)**
 
 🚧 _Work In Progress_ 🚧
 

@@ -1,13 +1,13 @@
 // use dbus::blocking::Connection;
 use dbus::ffidisp::Connection;
-// use embedded_hal::digital::v2::{InputPin,OutputPin};
+use embedded_hal::adc::Channel;
 use dbus::Message;
 // use std::time::Duration;
 use crate::CanError;
 // use bitvec::prelude::*;
 
 
-
+struct Adc1;
 pub struct ADC12<'a> {
     conn: &'a Connection,
     node: String,
@@ -30,8 +30,65 @@ impl<'a> ADC12<'a> {
     }
 }
 
+pub struct Temperatur01;
+pub struct Temperatur02;
+pub struct Temperatur03;
 
+pub struct Temp<'a> {
+    conn: &'a Connection,
+    node: String,
+    method: String,
+    // msg:  Message,
+}
 
+impl<'a> Temp<'a> {
+    /// Create new Dingital node 
+    /// Message::new_method_call( "com.lar.service.can", "/com/lar/nodes/Analog1", "com.lar.nodes.Analog1", "Temperatur01").unwrap();
+    pub fn new( conn:&Connection,node:String, method:String ) -> Temp{
+        Temp{conn,node,method}
+    }
+    /// Read AD16bit value
+    /// 
+    pub fn read(&self) -> Result<u32,CanError> {
+        let r = self.conn.send_with_reply_and_block(Message::new_method_call( "com.lar.service.can",self.node.as_str(), "com.lar.nodes.Analog1", self.method.as_str()).unwrap(),2000)?;
+        let t:u32 = r.get1().unwrap_or(0);
+        Ok(t)
+    }
+}
+
+impl<'a> Channel<Adc1> for ADC12<'a> {
+    type ID = u8;
+    fn channel() -> u8 {5u8 }
+}
+
+pub struct AnalogNode<'a> {
+    pub node: u32,
+    pub ain: [ADC12<'a>;5],
+    pub temp: [Temp<'a>;3],
+}
+
+impl <'a> AnalogNode<'a> {
+    pub fn new(c:&Connection,node: u32) -> AnalogNode{
+
+        let node_path = match node {
+            0x2 => format!("/com/lar/nodes/Analog1"),
+            _    => format!("/com/lar/nodes/Analog1"),
+        };
+        let ain = [
+            ADC12::new(c,node_path.clone(),"GenIn1".to_owned()),
+            ADC12::new(c,node_path.clone(),"GenIn2".to_owned()),
+            ADC12::new(c,node_path.clone(),"GenIn3".to_owned()),
+            ADC12::new(c,node_path.clone(),"GenIn4".to_owned()),
+            ADC12::new(c,node_path.clone(),"GenIn5".to_owned()),
+        ];
+        let temp = [
+            Temp::new(c,node_path.clone(),"Temperatur01".to_owned()),
+            Temp::new(c,node_path.clone(),"Temperatur02".to_owned()),
+            Temp::new(c,node_path.clone(),"Temperatur03".to_owned()),
+        ];
+        AnalogNode { node, ain, temp }
+    }
+}
 
 
 
