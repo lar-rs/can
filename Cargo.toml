@@ -1,5 +1,5 @@
 [package]
-name = "lscan"
+name = "can"
 authors = ["Sascha Smolkov <sascha.smolkov@gmail.com>"]
 categories = ["linux", "automatic", "sensor"]
 description = "LAR process water analyzers"
@@ -7,7 +7,7 @@ edition = "2018"
 keywords = ["can", "socketcan", "co2", "airflow", "humidity", "pressure","pump","valve"]
 license = "Apache-2.0 OR MIT"
 readme = "README.md"
-repository = "https://github.com/lar-rs/lscan"
+repository = "https://github.com/lar-rs/can"
 version = "0.1.0"
 
 [build-dependencies]
@@ -19,7 +19,7 @@ cfg-if = "0.1.10"
 ### cli|args
 structopt = { version = "0.3", features = [ "paw" ] }
 paw = "1.0"
-# clap_flags= "0.4.0"
+clap_flags= "0.4.0"
 
 # cli|communication|check
 # atty = "0.2.13"
@@ -50,17 +50,18 @@ nom = "5.0.1"
 ## Serealizers
 serde = { version = "1.0", default-features = false, features = ["derive"] }
 bincode = "1.2.0"
-# serde_json = "1.0.41"
+serde_json = "1.0.42"
 ### driver|hardware
 socketcan = "1.7.0"
+dbus="0.7.1"
 
 ### channels|async|net|static
 crossbeam = "0.7.3"
 lazy_static = "1.4.0"
-async-std  = { version = "1.0.1", features = ["unstable"] }
+async-std  = { version = "1.1.0", features = ["unstable"] }
 async-log  = "2.0.0"
 # futures-preview = {version = "0.3.0-alpha.19", features = ["async-await"], optional = true }
-async-trait = "0.1.18"
+async-trait = "0.1.19"
 # surf = { git = "https://github.com/rustasync/surf.git" }
 
 ### protocol|jsonrpc
@@ -69,9 +70,12 @@ jsonrpc-derive = "14.0.3"
 jsonrpc-ipc-server = "14.0.3"
 jsonrpc-core-client = "14.0.3"
 jsonrpc-tcp-server = "14.0.3"
-
+tarpc = "0.19.0"
 
 # nom = "5.0.1"
 # bytes = "0.4.12"
 # serial = "0.4.0"
 # futures-preview = { version = "0.3.0-alpha.19", optional = true, features = [ "async-await"] }
+
+embedded-hal = { version = "0.2.3", features = ["unproven"] }
+nb = "0.1.2"

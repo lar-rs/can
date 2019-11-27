@@ -5,11 +5,19 @@ use async_std::prelude::*;
 use async_std::fs;
 use async_std::path::Path;
 use toml;
+
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+pub struct Index {
+    pub addr: u32,
+}
+
 /// Configuration 
  #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Config {
     pub iface: String,
     pub bautrate: u32,
+
 }
 
 

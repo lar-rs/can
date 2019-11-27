@@ -31,7 +31,7 @@
 //         }
 //     })
 // }
-use lscan::cli::Args;
+use can::cli::Args;
 // use async_log::{instrument, span};
 // use log::info;
 // use lscan::banner;
@@ -57,7 +57,7 @@ fn setup_logger() {
 
 #[paw::main]
 fn main(args: Args) -> io::Result<()> {
-    println!("{}",Paint::blue(lscan::banner::NAME));
+    println!("{}",Paint::blue(can::banner::NAME));
     setup_logger();
     task::block_on(args.command())
 }

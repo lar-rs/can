@@ -4,14 +4,14 @@ pub mod digital;
 pub mod aouts;
 pub mod server;
 
-use super::can::Data;
+use super::message::Data;
 use jsonrpc_core::futures::future::{Future};
 use jsonrpc_core::{Result};
 // use jsonrpc_core_client::transports::local;
 use jsonrpc_derive::rpc;
 
 #[rpc]
-pub trait Msg{
+pub trait Node{
     /// Returns a protocol version
 	// #[rpc(name = "protocolVersion")]
 	// fn protocol_version(&self) -> Result<String>;

@@ -5,9 +5,15 @@
 pub mod error;
 pub mod banner;
 pub mod config;
+pub mod message;
 pub mod cli;
-pub mod can;
-pub mod rpc;
+// pub mod can;
+pub mod dbus;
+// pub mod rpc;
 pub mod cmd;
-// pub use self::error::CanError;
-// pub use self::can4linux as canbus;
+pub use error::CanError;
+
+
+pub trait Datagramm  {
+    fn tramsmit(&self,msg:message::Message) -> Result<message::Message,CanError>;
+}

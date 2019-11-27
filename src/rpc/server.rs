@@ -1,17 +1,17 @@
 use serde::{Deserialize,Serialize};
 
-pub use super::Msg;
+pub use super::Node;
 pub use super::analog::Analog;
 pub use super::aouts::AOuts;
 pub use super::digital::Digital;
 pub use super::motor::DoppelMotor;
 use bitvec::prelude::*;
-use crate::can;
-use can::{SharedCan};
-use crate::error::CanError;
+
+use crate::can::{Can,SharedCan,Datagram};
 // use crate::rpc::motor as motor1;
 // use crate::rpc::motor as motor2;
-use can::*;
+use crate::message::{Addr,Data};
+use crate::CanError;
 use jsonrpc_core::{Result};
 
 use lazy_static::lazy_static;
@@ -46,15 +46,21 @@ fn can0_write(addr:&Addr,data:&Data) -> Result<()>{
     Ok(())
 }
 
-pub struct CanNode(&'static Can);
+pub struct SCNode{
+    can: Can,
+    node: u32
+}
 
-impl CanNode {
-    pub fn new(can: &'static Can) -> Self {
-        CanNode(can)
+impl SCNode {
+    pub fn new(can: Can) -> SCNode {
+        SCNode{
+            can: can,
+            node: 2,
+        } 
     }
 }
 
-impl Msg for CanNode {
+impl Node for SCNode {
     fn read_data(&self,node:u32,index:u16,sub:u8) -> Result<Data> {
         let data = can0_read(&Addr::new(node,index,sub))?;
         Ok(data)

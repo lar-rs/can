@@ -7,7 +7,7 @@ use std::io::{Error, ErrorKind};
 // use std::string::FromUtf8Error;
 
 use socketcan::{CANSocketOpenError,ConstructionError};
-// use dbus::Error as DBusError;
+use dbus::Error as DBusError;
 use jsonrpc_core::Error as RpcError;
 // use mut_guard::*;
 
@@ -19,6 +19,9 @@ pub enum CanError {
     #[fail(display = "rpc error - {}",err)]
     RpcError {err: RpcError },
 
+    #[fail(display = "dbus error - {}",err)]
+    DBusError {err: DBusError },
+     
     #[fail(display = "device error - {}",msg)]
     CanDev {msg: String},
 
@@ -34,6 +37,8 @@ pub enum CanError {
     #[fail(display = "socket can error - {}", msg)]
     Canbus { msg: String },
 
+    #[fail(display = "socket can error - {}", msg)]
+    Convert { msg: String },
 
 }
 
@@ -77,11 +82,14 @@ impl From<CanError> for RpcError {
         RpcError::internal_error()
     }
 }
-// impl From<DBusError> for CanError {
-    // fn from(kind:DBusError) -> CanError {
-        // CanError::DBusError{err:kind}
-    // }
+impl From<DBusError> for CanError {
+    fn from(kind:DBusError) -> CanError {
+        CanError::DBusError{err:kind}
+    }
+}
+// 
+// impl From<std::convert::From<std::string::String> for CanError {
+    // fn from(kind:)
 // }
-
 
 //

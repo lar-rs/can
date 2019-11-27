@@ -20,8 +20,8 @@ use super::error::CanError;
 pub type AInput16 = u16;
 /// AnalogNode
 // #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct AnalogNode {
-
+pub struct AnalogNode<'a> {
+    can : &'a Can,
     pub node:   u32,
     pub in01:   u16,
     pub in02:   u16,
@@ -39,7 +39,7 @@ pub struct AnalogNode {
 }
 
 
-impl Default for AnalogNode {
+impl<'a>  Default for AnalogNode<'a>  {
     fn default() -> Self{
         Self {
             node: 0x2,
@@ -62,9 +62,10 @@ impl Default for AnalogNode {
 
 
 
-impl AnalogNode {
-    pub fn new(id:u32,can:) -> Self{
+impl<'a>  AnalogNode<'a>  {
+    pub fn new(can:&'a Can,id:u32) -> Self{
         Self {
+            can : can
             node:   id,
             in01:   3262,
             in02:   3000,

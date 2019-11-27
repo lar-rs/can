@@ -4,185 +4,21 @@ use crate::{
     error::{CanError,wrong_data},
 };
 // use async_std::io;
-use std::fmt;
 // use bincode::{deserialize, serialize};
 use std::collections::BTreeMap;
-use std::cmp::{Ordering,Ord};
 use lazy_static::lazy_static;
 
-use std::convert::TryInto;
 // use std::iter::Iterator;
 // use serde_json::from_slice;
 use std::time::Duration;
 use std::sync::{Mutex,Arc,RwLock};
-use async_std::io::{BufReader,BufWriter};
+// use async_std::io::{BufReader,BufWriter};
 use async_std::io;
 
-use nom::{
-    IResult,
-    named,
-    alt,
-    bytes::complete::{escaped, tag, take_while_m_n},
-    character::complete::{alphanumeric1 as alphanumeric, char, one_of},
-    combinator::map_res,
-    sequence::tuple};
 
-#[derive(Serialize,Deserialize,PartialEq,PartialOrd,Eq,Debug,Clone)]
-pub struct Addr {
-    pub node: u32,
-    pub index: u16,
-    pub sub: u8,
-}
-
-impl Addr {
-    pub fn new(node:u32,index:u16,sub:u8) -> Addr {
-        Addr {
-            node: node,
-            index: index,
-            sub: sub,
-        }
-    }
-}
-/// Cmp function
-impl Ord for Addr{
-    fn cmp(&self, other: &Self) -> Ordering {
-            self.node.cmp(&other.node)
-    }
-}
-impl fmt::Display for Addr{
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{:02}:{:04}:{:02}", self.node,self.index,self.sub)
-    }
-}
-
-#[derive(Serialize, Deserialize, PartialEq, Debug,Clone)]
-pub struct Data {
-    pub bytes: Vec<u8>,
-    pub len : u8,
-}
-impl Data {
-    fn data<T:From<Data>>(self) -> T{
-        self.into()
-    }
-}
-impl From<Vec<u8>> for Data {
-    fn from(bytes: Vec<u8>) -> Self {
-        Data{
-            bytes: bytes,
-            len: 0x21,
-        }
-    }
-}
-impl From<u8> for Data {
-    fn from(byte: u8) -> Self {
-        Data{
-            bytes: vec![byte],
-            len: 0x2F,
-        }
-    }
-}
-
-impl From<u16> for Data {
-    fn from(byte: u16) -> Self {
-        Data{
-            bytes: byte.to_le_bytes().to_vec(),
-            len: 0x23,
-        }
-    }
-}
-
-impl From<u32> for Data {
-    fn from(byte: u32) -> Self {
-        let mut bytes:Vec<u8> = byte.to_le_bytes().to_vec();
-        Data{
-            bytes:bytes,
-            len: 0x23,
-        }
-    }
-}
-impl Into<u8> for Data {
-    fn into(self) -> u8 {
-        let (int_bytes, _) = self.bytes.as_slice().split_at(std::mem::size_of::<u8>());
-        u8::from_le_bytes(int_bytes.try_into().unwrap())
-    }
-}
-
-impl Into<u16> for Data {
-    fn into(self) -> u16 {
-        let (int_bytes, _) = self.bytes.as_slice().split_at(std::mem::size_of::<u16>());
-        u16::from_le_bytes(int_bytes.try_into().unwrap())
-    }
-}
-impl Into<u32> for Data {
-    fn into(self) -> u32 {
-        let (int_bytes, _) = self.bytes.as_slice().split_at(std::mem::size_of::<u32>());
-        u32::from_le_bytes(int_bytes.try_into().unwrap())
-    }
-}
-impl Into<Vec<u8>> for Data {
-    fn into(self) -> Vec<u8> {
-        self.bytes.clone()
-    }
-}
-
-fn id_hex(input: &str) -> Result<u32, std::num::ParseIntError> {
-  u32::from_str_radix(input, 32)
-}
-fn index_hex(input: &str) -> Result<u16, std::num::ParseIntError> {
-    u16::from_str_radix(input, 16)
-}
-
-fn sub_hex(input: &str) -> Result<u8, std::num::ParseIntError> {
-    u8::from_str_radix(input, 8)
-}
-  
-fn is_hex_digit(c: char) -> bool {
-  c.is_digit(16)
-}
-
-fn nodeid(input: &str) -> IResult<&str, u32> {
-  map_res(
-    take_while_m_n(1, 2, is_hex_digit),
-    id_hex
-  )(input)
-}
-fn index(input: &str) -> IResult<&str, u16> {
-    map_res(
-      take_while_m_n(4, 4, is_hex_digit),
-      index_hex
-    )(input)
-}
-fn subindex(input:&str) -> IResult<&str, u8> {
-    map_res(
-      take_while_m_n(1, 2, is_hex_digit),
-      sub_hex
-    )(input)
-} 
-
-#[derive(Serialize, Deserialize, PartialEq, Debug,Clone)]
-pub struct CanMsg {
-    pub addr: Addr,
-    pub data: Option<Data>,
-}
+use crate::message::{Addr,Data,Message};
 
 
-pub fn to_canmsg(input: &str) -> IResult<&str, CanMsg> {
-    let (input, _) = tag("#")(input)?;
-    let (input, (node, index, sub)) = tuple((nodeid, index, subindex))(input)?;
-    let addr =Addr { node, index, sub };
-    let mut data: Option<Data> = None;
-    if input.len() > 2 {
-        let (dt,v) = input.split_at(2);
-        match dt.as_bytes()[1] {
-            b's' => data = Some(Data::from(Vec::from(v.as_bytes()))),
-            b'b' => data = Some(Data::from(v.parse::<u8>().unwrap_or(0))),
-            b'd' => data = Some(Data::from(v.parse::<u16>().unwrap_or(0))),
-            b't' => data = Some(Data::from(v.parse::<u32>().unwrap_or(0))),
-            _ => data = None,
-        }
-    };
-    Ok((input,CanMsg{ addr, data }))
-}
 // pub fn can_data(input: &str) -> IResult<&str,Data> {
     
     // Ok(addr,None)
@@ -190,20 +26,6 @@ pub fn to_canmsg(input: &str) -> IResult<&str, CanMsg> {
 
 
 
-impl fmt::Display for Data {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "0x{:X}[ {}]",self.len, self.bytes.iter().fold(String::new(), |acc, &num| acc + &num.to_string() + " "))
-    }
-}
-
-impl fmt::Display for CanMsg {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        match &self.data {
-            Some(data) => write!(f, "{} {}",self.addr, data),
-            None => write!(f, "{} None",self.addr),
-        }
-    }
-}
 // impl From<Vec<u8>> for Data {
     // fn from(bytes: Vec<u8>) -> Self {
         // Data{
@@ -233,6 +55,11 @@ pub fn incomming ( addr:Addr, data:Data ) {
 pub trait Datagram {
     fn read(&self,addr: &Addr) -> Result<Data,CanError>;
     fn write(&self,addr: &Addr,tx:&Data) -> Result<(),CanError>;
+}
+
+pub struct Telegramm {
+    pub addr:Addr,
+    pub data:Data,
 }
 
 // pub trait AsyncDatagram {
@@ -361,22 +188,25 @@ impl Can {
         }
         Ok(())
     }
-    pub fn processing(&self,msg:&CanMsg) -> Result<Data,CanError> {
-        match &msg.data {
-            Some(data) => { self.write_data(&msg.addr, &data)?; Ok(data.clone()) },
-            None => Ok(self.read_data(&msg.addr)?),
+    pub fn processing(&self,msg:&Message) -> Result<Data,CanError> {
+        if msg.is_write() {
+            self.write_data(&msg.addr, &msg.data)?;
+            Ok(msg.data.clone())
+        }else {
+            Ok(self.read_data(&msg.addr)?)
+
         }
+        
     }
 }
 
 
-pub async fn send_message(can:&Can,msg:&CanMsg) -> io::Result<Data>  {
-    match &msg.data {
-        Some(data) => { 
-            can.write(&msg.addr,&data)?;
-            Ok(data.clone())
-        },
-        None => Ok(can.read(&msg.addr)?),
+pub async fn send_message(can:&Can,msg:&Message) -> io::Result<Data>  {
+    if msg.is_write() {
+        can.write_data(&msg.addr, &msg.data)?;
+        Ok(msg.data.clone())
+    }else {
+        Ok(can.read_data(&msg.addr)?)
     }
 }
 
@@ -471,21 +301,3 @@ mod tests {
     }
 }
 
-pub const HELP: &'static str = r#"
-Format #Address Data
-#NodeIndexSub
-Data:
-    s - String
-    b - u8
-    d - u16
-    t - u32
-Examples:
-   `#12600001 sLong data` - Write long data 
-       12   - Node id 0x12
-       6000 - Index 
-       01   - subindex
-       s    - String data format
-
-   `#12600001` read long data
-   `#18610101 d4534
-"#;

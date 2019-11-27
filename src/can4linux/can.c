@@ -390,3 +390,8 @@ U32 analogext_get_out(U8 out) {
 Err analogext_set_out(U8 out, U32 value){
     return write_u32(can0(),0x1c,0x6411,out,2,value);
 }
+
+
+int main() {
+
+}

@@ -16,43 +16,58 @@ use async_std::prelude::*;
 use async_std::io;
 use async_std::eprintln;
 use async_std::io::{BufReader,BufWriter};
-use crate::cli::Args;
+// use crate::cli::Args;
+// use duplexify::Duplex;
+// use serde_json::to_string;
+
 
 // use crate::rpc::*;
 // use crate::rpc::server::*;
-use crate::can::*;
-
+// use crate::can::*;
+use crate::dbus::Driver;
+use crate::message::{Message};
 use structopt::StructOpt;
 // use futures::prelude::*;
 
-///  ✇ setup device
+/// ✇ setup device
 #[derive(Debug, StructOpt)]
 pub struct Opt {
-    // #[structopt(name = "virtual", about = "setup virtual devise")]
+     /// Interface name
+     #[structopt(name = "interface", default_value = "can0", long = "interface")]
+     interface: String,
 }
 
 impl Opt {
-    pub async fn run(&self,args:&Args) -> io::Result<()> {
+    pub async fn run(&self) -> io::Result<()> {
         // This async scope times out after 5 seconds.
-        let iface =args.interface();
+        // let iface =args.interface;
 
-        info!("start pipe to:{}",iface);
-        println!("{}",HELP);
+
+        info!("start pipe to:{}",self.interface);
+        println!("{}",Message::help());
         let stdin = io::stdin();
         let stdout = io::stdout();
         let reader = BufReader::new(stdin);
         let mut writer = BufWriter::new(stdout);
         let mut lines = reader.lines();
-        let can0 = Can::open(args.interface())?;
+        let device = Driver::open(self.interface.as_str())?;
+        // let device = match self.interface.as_str() {
+            // "can0" => Can::open(&self.interface)?,
+            // _ => Can::open(&self.interface)?
+        // };
         while let Some(line) =lines.next().await {
             let s = line?;
-            match to_canmsg(&s) {
+            match Message::from_str(&s) {
                 Ok((_,msg)) => { 
-                    println!("MSG:{}",msg);
-                    let data = send_message(&can0,&msg).await?;
-                    writer.write(&data.bytes).await?;
+                    println!("TX:{}",msg);
+                    let msg = device.transmit(msg)?;
+                    println!("RX:{}",msg);
+
+                    writer.write(&msg.data.bytes).await?;
                 },
                 Err(e) => { 
+                    // let msg = telegramm(Telegramm::Method(s.to_string())).await?;
+                    // println!("METDOD:{:?}",msg);
                     eprintln!("Error: Could not compile to CanMsg:{:?}",e).await;
                     writer.write(b"e").await?;
                 },
