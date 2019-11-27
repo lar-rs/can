@@ -1,6 +1,8 @@
 pub mod dig;
 pub mod uart;
 pub mod adc;
+pub mod stepper;
+pub mod stirrer;
 // use async_std::sync::channel;
 use crossbeam::channel::{Sender,Receiver};
 // use async_std::task;
