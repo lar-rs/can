@@ -94,62 +94,6 @@ impl<'a> InputPin for DigOUT<'a> {
 }
 
 
-pub struct DigitalNode<'a> {
-    pub node: u32,
-    pub din: [DigIN<'a>;16],
-    pub dout: [DigOUT<'a>;16],
-}
-
-impl <'a> DigitalNode<'a> {
-    pub fn new(c:&Connection,node: u32) -> DigitalNode{
-
-        let node_path = match node {
-            0x18 => format!("/com/lar/nodes/Digital1"),
-            0x19 => format!("/com/lar/nodes/Digital2"),
-            _    => format!("/com/lar/nodes/Digital1"),
-        };
-        let din = [
-            DigIN::new(c,node_path.clone(),1),
-            DigIN::new(c,node_path.clone(),2),
-            DigIN::new(c,node_path.clone(),3),
-            DigIN::new(c,node_path.clone(),4),
-            DigIN::new(c,node_path.clone(),5),
-            DigIN::new(c,node_path.clone(),6),
-            DigIN::new(c,node_path.clone(),7),
-            DigIN::new(c,node_path.clone(),8),
-            DigIN::new(c,node_path.clone(),9),
-            DigIN::new(c,node_path.clone(),10),
-            DigIN::new(c,node_path.clone(),11),
-            DigIN::new(c,node_path.clone(),12),
-            DigIN::new(c,node_path.clone(),13),
-            DigIN::new(c,node_path.clone(),14),
-            DigIN::new(c,node_path.clone(),15),
-            DigIN::new(c,node_path.clone(),16),
-        ];
-        let dout = [
-            DigOUT::new(c,node_path.clone(),1),
-            DigOUT::new(c,node_path.clone(),2),
-            DigOUT::new(c,node_path.clone(),3),
-            DigOUT::new(c,node_path.clone(),4),
-            DigOUT::new(c,node_path.clone(),5),
-            DigOUT::new(c,node_path.clone(),6),
-            DigOUT::new(c,node_path.clone(),7),
-            DigOUT::new(c,node_path.clone(),8),
-            DigOUT::new(c,node_path.clone(),9),
-            DigOUT::new(c,node_path.clone(),10),
-            DigOUT::new(c,node_path.clone(),11),
-            DigOUT::new(c,node_path.clone(),12),
-            DigOUT::new(c,node_path.clone(),13),
-            DigOUT::new(c,node_path.clone(),14),
-            DigOUT::new(c,node_path.clone(),15),
-            DigOUT::new(c,node_path.clone(),16),
-        ];
-        DigitalNode { node , din, dout}
-    }
-}
-
-
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -159,7 +103,7 @@ mod tests {
 
     #[test]
     fn test_adc12() {
-        /// tcp:host=192.168.66.59,port=6666
+        // tcp:host=192.168.66.59,port=6666
         let c = Connection::open_private("tcp:host=192.168.66.59,port=6666").expect("open private connection tcp:host=192.168.66.59,port=6666");
         c.register();
         let digital1 = String::from("/com/lar/nodes/Digital1");

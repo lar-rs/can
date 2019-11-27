@@ -2,6 +2,7 @@
 use dbus::ffidisp::Connection;
 use embedded_hal::adc::Channel;
 use dbus::Message;
+// use super::uart::Uart;
 // use std::time::Duration;
 use crate::CanError;
 // use bitvec::prelude::*;
@@ -38,7 +39,6 @@ pub struct Temp<'a> {
     conn: &'a Connection,
     node: String,
     method: String,
-    // msg:  Message,
 }
 
 impl<'a> Temp<'a> {
@@ -61,34 +61,6 @@ impl<'a> Channel<Adc1> for ADC12<'a> {
     fn channel() -> u8 {5u8 }
 }
 
-pub struct AnalogNode<'a> {
-    pub node: u32,
-    pub ain: [ADC12<'a>;5],
-    pub temp: [Temp<'a>;3],
-}
-
-impl <'a> AnalogNode<'a> {
-    pub fn new(c:&Connection,node: u32) -> AnalogNode{
-
-        let node_path = match node {
-            0x2 => format!("/com/lar/nodes/Analog1"),
-            _    => format!("/com/lar/nodes/Analog1"),
-        };
-        let ain = [
-            ADC12::new(c,node_path.clone(),"GenIn1".to_owned()),
-            ADC12::new(c,node_path.clone(),"GenIn2".to_owned()),
-            ADC12::new(c,node_path.clone(),"GenIn3".to_owned()),
-            ADC12::new(c,node_path.clone(),"GenIn4".to_owned()),
-            ADC12::new(c,node_path.clone(),"GenIn5".to_owned()),
-        ];
-        let temp = [
-            Temp::new(c,node_path.clone(),"Temperatur01".to_owned()),
-            Temp::new(c,node_path.clone(),"Temperatur02".to_owned()),
-            Temp::new(c,node_path.clone(),"Temperatur03".to_owned()),
-        ];
-        AnalogNode { node, ain, temp }
-    }
-}
 
 
 
@@ -101,7 +73,7 @@ mod tests {
 
     #[test]
     fn test_adc12() {
-        /// tcp:host=192.168.66.59,port=6666
+        // tcp:host=192.168.66.59,port=6666
         let c = Connection::open_private("tcp:host=192.168.66.59,port=6666").expect("open private connection tcp:host=192.168.66.59,port=6666");
         c.register();
         // let get_in2 = Message::new_method_call( "com.lar.service.can", "/com/lar/nodes/Analog1", "com.lar.nodes.Analog1", "GetIn2").unwrap();

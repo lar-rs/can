@@ -1,6 +1,6 @@
 // use dbus::blocking::Connection;
 use dbus::ffidisp::Connection;
-use embedded_hal::digital::v2::{InputPin,OutputPin};
+// use embedded_hal::digital::v2::{InputPin,OutputPin};
 use dbus::Message;
 // use std::time::Duration;
 use crate::CanError;
@@ -82,7 +82,7 @@ mod tests {
 
     #[test]
     fn test_stepper() {
-        /// tcp:host=192.168.66.59,port=6666
+        // tcp:host=192.168.66.59,port=6666
         let c = Connection::open_private("tcp:host=192.168.66.59,port=6666").expect("open private connection tcp:host=192.168.66.59,port=6666");
         c.register();
         let mut x  = Stepper::new(&c,"/com/lar/nodes/Doppelmotor1".to_owned(),1);

@@ -3,7 +3,14 @@ pub mod uart;
 pub mod adc;
 pub mod stepper;
 pub mod stirrer;
+pub mod gp;
 
+use dig::{DigOUT,DigIN};
+use gp::GP;
+use stepper::Stepper;
+use stirrer::Stirrer;
+use uart::Uart;
+use adc::{ADC12,Temp};
 
 // use async_std::sync::channel;
 use crossbeam::channel::{Sender,Receiver};
@@ -93,7 +100,7 @@ impl Driver {
                 let index = msg.addr.eds_index();
                 if msg.is_write() {
                     let m = DBusMessage::new_method_call( "com.lar.service.can",path.as_str(), "com.lar.nodes.simple", "SetIndexValue").unwrap().append2(index,msg.data.to_string());
-                    let r = c.send_with_reply_and_block(m, 2000).expect("send dbus message failed");
+                    let _ = c.send_with_reply_and_block(m, 2000).expect("send dbus message failed");
 
                 }else {
                     let m = DBusMessage::new_method_call( "com.lar.service.can",path.as_str(), "com.lar.nodes.simple", "GetIndexValue").unwrap().append1(index);
@@ -135,5 +142,157 @@ fn dbus_path_from_node(node:u32) -> String {
         0x19 => String::from("/com/lar/nodes/Digital2"),
         0x1c => String::from("/com/lar/nodes/Analogext1"),
         _ => String::from("/com/lar/nodes/Scan")
+    }
+}
+
+
+pub struct DigitalNode<'a> {
+    pub node: u32,
+    pub din: [DigIN<'a>;16],
+    pub dout: [DigOUT<'a>;16],
+}
+
+impl <'a> DigitalNode<'a> {
+    pub fn new(c:&Connection,node: u32) -> DigitalNode{
+
+        let node_path = match node {
+            0x18 => format!("/com/lar/nodes/Digital1"),
+            0x19 => format!("/com/lar/nodes/Digital2"),
+            _    => format!("/com/lar/nodes/Digital1"),
+        };
+        let din = [
+            DigIN::new(c,node_path.clone(),1),
+            DigIN::new(c,node_path.clone(),2),
+            DigIN::new(c,node_path.clone(),3),
+            DigIN::new(c,node_path.clone(),4),
+            DigIN::new(c,node_path.clone(),5),
+            DigIN::new(c,node_path.clone(),6),
+            DigIN::new(c,node_path.clone(),7),
+            DigIN::new(c,node_path.clone(),8),
+            DigIN::new(c,node_path.clone(),9),
+            DigIN::new(c,node_path.clone(),10),
+            DigIN::new(c,node_path.clone(),11),
+            DigIN::new(c,node_path.clone(),12),
+            DigIN::new(c,node_path.clone(),13),
+            DigIN::new(c,node_path.clone(),14),
+            DigIN::new(c,node_path.clone(),15),
+            DigIN::new(c,node_path.clone(),16),
+        ];
+        let dout = [
+            DigOUT::new(c,node_path.clone(),1),
+            DigOUT::new(c,node_path.clone(),2),
+            DigOUT::new(c,node_path.clone(),3),
+            DigOUT::new(c,node_path.clone(),4),
+            DigOUT::new(c,node_path.clone(),5),
+            DigOUT::new(c,node_path.clone(),6),
+            DigOUT::new(c,node_path.clone(),7),
+            DigOUT::new(c,node_path.clone(),8),
+            DigOUT::new(c,node_path.clone(),9),
+            DigOUT::new(c,node_path.clone(),10),
+            DigOUT::new(c,node_path.clone(),11),
+            DigOUT::new(c,node_path.clone(),12),
+            DigOUT::new(c,node_path.clone(),13),
+            DigOUT::new(c,node_path.clone(),14),
+            DigOUT::new(c,node_path.clone(),15),
+            DigOUT::new(c,node_path.clone(),16),
+        ];
+        DigitalNode { node , din, dout}
+    }
+}
+
+pub struct AnalogNode<'a> {
+    pub node: u32,
+    pub ain: [ADC12<'a>;5],
+    pub temp: [Temp<'a>;3],
+    pub uart: [Uart<'a>;2],
+}
+
+impl <'a> AnalogNode<'a> {
+    pub fn new(c:&Connection,node: u32) -> AnalogNode{
+
+        let node_path = match node {
+            0x2 => format!("/com/lar/nodes/Analog1"),
+            _    => format!("/com/lar/nodes/Analog1"),
+        };
+        let ain = [
+            ADC12::new(c,node_path.clone(),"GenIn1".to_owned()),
+            ADC12::new(c,node_path.clone(),"GenIn2".to_owned()),
+            ADC12::new(c,node_path.clone(),"GenIn3".to_owned()),
+            ADC12::new(c,node_path.clone(),"GenIn4".to_owned()),
+            ADC12::new(c,node_path.clone(),"GenIn5".to_owned()),
+        ];
+        let temp = [
+            Temp::new(c,node_path.clone(),"Temperatur01".to_owned()),
+            Temp::new(c,node_path.clone(),"Temperatur02".to_owned()),
+            Temp::new(c,node_path.clone(),"Temperatur03".to_owned()),
+        ];
+        let uart = [
+            Uart::new(&c,node_path.clone(),"com.lar.nodes.Analog1".to_owned(),1),
+            Uart::new(&c,node_path.clone(),"com.lar.nodes.Analog1".to_owned(),2),
+        ];
+        AnalogNode { node, ain, temp, uart}
+    }
+}
+
+// pub async fn unix_datagramm(driver:Driver,path:&Path) -> io::Result<()> {
+    // Ok(())
+// }
+pub struct MotorNode<'a> {
+    pub node: u32,
+    pub gp: [GP<'a>;2],
+    pub stepper: [Stepper<'a>;2],
+    pub stirrer: [Stirrer<'a>;2],
+    pub uart: [Uart<'a>;2]
+}
+
+
+impl<'a> MotorNode<'a> {
+    pub fn new(c:&Connection,node: u32) -> MotorNode{
+        let node_path = match node {
+            0x18 => format!("/com/lar/nodes/Doppelmotor1"),
+            0x19 => format!("/com/lar/nodes/Doppelmotor2"),
+            _    => format!("/com/lar/nodes/Doppelmotor1"),
+        };
+        let gp  = [
+            GP::new(&c,node_path.clone(),1),
+            GP::new(&c,node_path.clone(),2)
+        ];
+        let stepper  = [
+            Stepper::new(&c,node_path.clone(),1),
+            Stepper::new(&c,node_path.clone(),2)
+        ];
+        let stirrer = [
+            Stirrer::new(&c,node_path.clone(),1),
+            Stirrer::new(&c,node_path.clone(),2),
+        ];
+        let uart = [
+            Uart::new(&c,node_path.clone(),"com.lar.nodes.Doppelmotor3".to_owned(),1),
+            Uart::new(&c,node_path.clone(),"com.lar.nodes.Doppelmotor3".to_owned(),2),
+        ];
+       MotorNode{ node, gp, stepper, stirrer, uart}
+
+    }
+}
+
+
+pub struct Nodes<'a> {
+    pub analog:  AnalogNode<'a>,
+    pub motor:   [MotorNode<'a>;2],
+    pub digital: [DigitalNode<'a>;2],
+}
+
+
+impl<'a> Nodes<'a> {
+    pub fn new(c:&'a Connection)  -> Nodes<'a> {
+        let analog = AnalogNode::new(c, 0x2);
+        let motor = [
+            MotorNode::new(c,0x12),
+            MotorNode::new(c,0x14),
+        ];
+        let digital = [
+            DigitalNode::new(c,0x18),
+            DigitalNode::new(c,0x19),
+        ];
+        Nodes { analog, motor, digital }
     }
 }

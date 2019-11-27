@@ -9,6 +9,16 @@
 ![Minimum Rust Version][min-rust-badge]
 
 
+## :tada: Interface 
+
+*   `DIN` 
+*   `DOUT`
+*  ⚙️`GP`
+*   `Stirrer`
+*   `Stepper`
+* `Pin`
+* `Uart`
+
 ## 🎙️ Commands
 
 ### `can`
@@ -173,3 +183,4 @@ curl -X POST -H "Content-Type: application/json" -d '{"jsonrpc": "2.0", "method"
 [irc]:          https://webirc.hackint.org/#irc://irc.hackint.org/#lar
 [issue]: https://img.shields.io/github/issues/lar-rs/lscan?style=flat-square
 [min-rust-badge]: https://img.shields.io/badge/rustc-1.38+-blue.svg
+[zulip]: https://lar.zulipchat.com/

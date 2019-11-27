@@ -83,7 +83,7 @@ mod tests {
 
     #[test]
     fn test_uart() {
-        /// tcp:host=192.168.66.59,port=6666
+        // tcp:host=192.168.66.59,port=6666
         let c = Connection::open_private("tcp:host=192.168.66.59,port=6666").expect("open private connection tcp:host=192.168.66.59,port=6666");
         let analog_interface = "com.lar.nodes.Analog1";
         let dm_interface = "com.lar.nodes.Doppelmotor3";
