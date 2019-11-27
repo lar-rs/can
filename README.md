@@ -1,17 +1,17 @@
-#  :electric_plug: `lscan`
+#  :electric_plug: `can`
 
- **📦  LAR linux socket can rewrited in [🦀 **Rust**](https://github.com/lar-rs/lscan)**
+ **📦  LAR linux socket can rewrited in [🦀 **Rust**](https://github.com/lar-rs/can)**
 
 🚧 _Work In Progress_ 🚧
 
-[![travis build Status](https://travis-ci.com/lar-rs/lscan.svg?branch=master)](https://travis-ci.com/lar-rs/lscan)
+[![travis build Status](https://travis-ci.com/lar-rs/can.svg?branch=master)](https://travis-ci.com/lar-rs/can)
 ![open issue][issue]
 ![Minimum Rust Version][min-rust-badge]
 
 
 ## 🎙️ Commands
 
-### `lscan`
+### `can`
 
 - `iface`: socket can interface name default value `vcan0`
 
