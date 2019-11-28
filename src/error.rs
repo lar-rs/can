@@ -8,7 +8,7 @@ use std::io::{Error, ErrorKind};
 
 use socketcan::{CANSocketOpenError,ConstructionError};
 use dbus::Error as DBusError;
-use jsonrpc_core::Error as RpcError;
+// use jsonrpc_core::Error as RpcError;
 // use mut_guard::*;
 
 #[derive(Fail, Debug)]
@@ -16,8 +16,8 @@ pub enum CanError {
     #[fail(display = "io error - {}",err)]
     IOError {err: io::Error },
 
-    #[fail(display = "rpc error - {}",err)]
-    RpcError {err: RpcError },
+    // #[fail(display = "rpc error - {}",err)]
+    // RpcError {err: RpcError },
 
     #[fail(display = "dbus error - {}",err)]
     DBusError {err: DBusError },
@@ -51,11 +51,11 @@ pub fn unknown_interface(msg:String) -> CanError {
     CanError::CanDev{ msg }
 }
 
-impl From<RpcError> for CanError {
-    fn from(kind: RpcError) -> CanError {
-        CanError::RpcError{err:kind}
-    }
-}
+// impl From<RpcError> for CanError {
+    // fn from(kind: RpcError) -> CanError {
+        // CanError::RpcError{err:kind}
+    // }
+// }
 impl From<CANSocketOpenError> for CanError {
     fn from(kind: CANSocketOpenError) -> CanError {
         CanError::CanOpenError{err:kind}
@@ -77,11 +77,11 @@ impl From<CanError> for Error {
     }
 }
 
-impl From<CanError> for RpcError {
-    fn from(canerr:CanError) -> RpcError {
-        RpcError::internal_error()
-    }
-}
+// impl From<CanError> for RpcError {
+    // fn from(canerr:CanError) -> RpcError {
+        // RpcError::internal_error()
+    // }
+// }
 impl From<DBusError> for CanError {
     fn from(kind:DBusError) -> CanError {
         CanError::DBusError{err:kind}
