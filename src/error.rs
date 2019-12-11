@@ -40,6 +40,9 @@ pub enum CanError {
     #[fail(display = "socket can error - {}", msg)]
     Convert { msg: String },
 
+    #[fail(display = "data converd error - {}", msg)]
+    DataConvert{ msg: String },
+
 }
 
 
@@ -93,3 +96,14 @@ impl From<DBusError> for CanError {
 // }
 
 //
+// impl std::convert::From<Error> for CanError {
+    // fn from(e: Error) -> Self {
+        // CanError::DataConvert{msg : format!("{}",e)}
+    // }
+// }
+
+impl std::convert::From<std::num::ParseIntError> for CanError {
+    fn from(e: std::num::ParseIntError) -> Self {
+        CanError::DataConvert{msg : format!("{}",e)}
+    }
+}

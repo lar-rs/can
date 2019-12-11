@@ -4,14 +4,16 @@ pub mod adc;
 pub mod stepper;
 pub mod stirrer;
 pub mod gp;
-
-use dig::{DigOUT,DigIN};
-use gp::GP;
-use stepper::Stepper;
-use stirrer::Stirrer;
-use uart::Uart;
-use adc::{ADC12,Temp};
-
+pub use self::dig::{DigOUT,DigIN};
+pub use self::gp::GP;
+pub use self::stepper::Stepper;
+pub use self::stirrer::Stirrer;
+pub use self::uart::Uart;
+pub use self::adc::{ADC12,Temp};
+use structopt::StructOpt;
+use std::path::Path;
+use notify::{RecommendedWatcher, RecursiveMode, Watcher};
+use std::time::Duration;
 // use async_std::sync::channel;
 use crossbeam::channel::{Sender,Receiver};
 // use async_std::task;
@@ -29,7 +31,7 @@ pub struct Route {
     resiver:  Receiver<Message>,
 
 }
-
+// use async_std::io;
 
 
 use dbus::ffidisp::Connection;
@@ -72,6 +74,10 @@ use dbus::ffidisp::Connection;
 // <arg direction="in" type="s" name="value"/>
 // <arg direction="out" type="b" name="is_done"/>
 // </method>
+// use std::str::FromStr;
+// use super::message::Addr;
+
+
 
 pub struct Driver {
     pub route: Route,
@@ -124,6 +130,7 @@ impl Driver {
         Ok(msg)
     }
 }
+
 
 impl crate::Datagramm for Driver {
     fn tramsmit(&self,msg:Message) -> Result<Message,CanError> {
@@ -295,4 +302,40 @@ impl<'a> Nodes<'a> {
         ];
         Nodes { analog, motor, digital }
     }
+    // pub fn open<'a>(addr:&str) -> Nodes<'a> {
+        // let c =
+    // }
+}
+
+pub fn connection(address:&str) -> Result<Connection,CanError> {
+    let conn = match address {
+        "system"  => Connection::new_system().expect("connect to system bus failed"),
+        "session" => Connection::new_session().expect("connect to session bus failed"),
+        _         => Connection::open_private(address).expect("connect to private bus failed"),
+    };
+    conn.register()?;
+    Ok(conn)
+}
+
+
+pub fn start(root:&Path,address:&str) -> Result<(),CanError> {
+    let (tx, rx) = std::sync::mpsc::channel();
+    // Automatically select the best implementation for your platform.
+    let mut watcher: RecommendedWatcher = Watcher::new(tx, Duration::from_secs(1)).unwrap();
+    // Automatically select the best implementation for your platform.
+    watcher.watch(&root, RecursiveMode::Recursive).unwrap();
+    let conn = connection(address)?;
+    dig::setup_output(&conn,&root.join("digital1"),"/com/lar/nodes/Digital1")?;
+    dig::setup_output(&conn,&root.join("digital2"),"/com/lar/nodes/Digital2")?;
+    loop {
+        match rx.recv() {
+           Ok(event) => {
+               println!("changed: {:?}", event);
+               
+           },
+           Err(err) => println!("watch error: {:?}", err),
+        };
+    }
+    
+    Ok(())
 }

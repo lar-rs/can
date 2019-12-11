@@ -1,9 +1,10 @@
 use serde::{Deserialize, Serialize};
-use async_std::io;
-use async_std::fs::File;
-use async_std::prelude::*;
-use async_std::fs;
-use async_std::path::Path;
+use std::io;
+use std::fs::File;
+use std::fs;
+use std::io::prelude::*;
+// use std::prelude::*;
+use std::path::Path;
 use toml;
 
 
@@ -32,8 +33,8 @@ impl Default for Config {
 }
 
 /// read config
-pub async fn read(path: &Path) -> io::Result<Config> {
-    let toml_str = fs::read_to_string(path).await?;
+pub fn read(path: &Path) -> io::Result<Config> {
+    let toml_str = fs::read_to_string(path)?;
     if let Ok(conf) = toml::from_str(&toml_str) {
         Ok(conf)
     }else {
@@ -41,12 +42,10 @@ pub async fn read(path: &Path) -> io::Result<Config> {
     }
 }
 
-
-
-pub async fn write(config: Config,path:&Path) ->io::Result<()> {
+pub fn write(config: Config,path:&Path) ->io::Result<()> {
     let toml_str = toml::to_string(&config).unwrap();
-    let mut file = File::create(path).await?;
-    file.write_all(toml_str.as_bytes()).await?;
-    file.sync_all().await?;
+    let mut file = File::create(path)?;
+    file.write_all(toml_str.as_bytes())?;
+    file.sync_all()?;
     Ok(())
 }

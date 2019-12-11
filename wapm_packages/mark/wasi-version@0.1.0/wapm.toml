@@ -1,0 +1,18 @@
+[package]
+name = "mark/wasi-version"
+version = "0.1.0"
+description = "A tool for detecting which version of WASI a WASM file is"
+repository = "https://github.com/MarkMcCaskey/wasi-version"
+license = "MIT"
+
+[[module]]
+name = "wasi-version"
+source = "target/wasm32-wasi/release/wasi-version.wasm"
+abi = "wasi"
+
+[module.interfaces]
+wasi = "0.0.0-unstable"
+
+[[command]]
+name = "wasi-version"
+module = "wasi-version"

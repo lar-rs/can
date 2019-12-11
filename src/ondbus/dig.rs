@@ -4,6 +4,9 @@ use embedded_hal::digital::v2::{InputPin,OutputPin};
 use dbus::Message;
 // use std::time::Duration;
 use crate::CanError;
+use std::io;
+use std::fs;
+use std::path::{Path,PathBuf};
 // use bitvec::prelude::*;
 
 
@@ -11,6 +14,7 @@ pub struct DigIN<'a> {
     conn: &'a Connection,
     node: String,
     input: u32,
+    path: PathBuf,
 }
 
 
@@ -18,9 +22,11 @@ impl<'a> DigIN<'a> {
     /// Create new Dingital node
     /// for example Message::new_method_call( "com.lar.service.can", self.node.as_str(), "com.lar.nodes.Digital16", "GetDigitalIn").unwrap().append1(self.input)
     pub fn new(conn:&Connection,node:String,input:u32) -> DigIN{
-        DigIN{conn,node,input}
+        let path =PathBuf::from("."); 
+        DigIN{conn,node,input,path}
     }
 }
+
 
 
 impl<'a> InputPin for DigIN<'a> {
@@ -40,9 +46,10 @@ impl<'a> InputPin for DigIN<'a> {
 }
 
 pub struct DigOUT<'a> {
-    conn:  &'a Connection,
-    node: String,
+    conn:   &'a Connection,
+    node:   String,
     output: u32,
+    path:   PathBuf,
 }
 
 impl<'a> DigOUT<'a> {
@@ -52,7 +59,8 @@ impl<'a> DigOUT<'a> {
     /// for example Message::new_method_call( "com.lar.service.can", self.node.as_str(), "com.lar.nodes.Digital16", "SetDigitalOut").unwrap().append2(self.output,true)
     /// for example Message::new_method_call( "com.lar.service.can", self.node.as_str(), "com.lar.nodes.Digital16", "GetDigitalOut").unwrap().append1(self.output)
     pub fn new(conn:&Connection,node:String,output:u32) -> DigOUT {
-        DigOUT{conn,node,output}
+        let path =PathBuf::from("."); 
+        DigOUT{conn,node,output,path}
     }
 }
 
@@ -92,6 +100,58 @@ impl<'a> InputPin for DigOUT<'a> {
         Ok(!high)
     }
 }
+// use std::time::Duration;
+// use async_std::path::{Path,PathBuf};
+
+// async fn output(path:PahtBuf)
+
+pub fn setup_output(c:&Connection,path:&Path,node:&str) -> io::Result<()> {
+    if !path.is_dir() {
+        fs::create_dir_all(&path)?;
+    }
+    for n in 0..15 {
+        let dout = DigOUT::new(c,node.to_owned(),n);
+        let path = path.join(format!("out{:2}",n));
+        if !path.is_dir() {
+            fs::create_dir_all(&path)?;
+            // let mut file = fs::File::create().await?;
+            fs::write(path.join("value"),match dout.is_high()? {
+            true => b"1",
+            false => b"0"})?;
+            fs::write(path.join("node"),node)?;
+            fs::write(path.join("interface"),b"dout")?;
+        }
+    }
+    Ok(())
+}
+
+
+
+pub fn setup_input(c:&Connection,path:&Path,node:&str) -> io::Result<()> {
+    if !path.is_dir() {
+        fs::create_dir_all(&path)?;
+    }
+    for n in 0..15 {
+        let dout = DigIN::new(c,node.to_owned(),n);
+        let path = path.join(format!("in{:2}",n));
+        if !path.is_dir() {
+            fs::create_dir_all(&path)?;
+            // let mut file = fs::File::create().await?;
+            fs::write(path.join("value"),match dout.is_high()? {
+            true => b"1",
+            false => b"0"})?;
+            fs::write(path.join("node"),node)?;
+            fs::write(path.join("interface"),b"dout")?;
+        }
+    }
+    Ok(())
+}
+// async fn changed_dout() -> io::Result<()> {
+// }
+
+// pub async fn start_digital(path:&Path ,node: &str) ->io::Result<()> {
+    // Ok(())
+// }
 
 
 #[cfg(test)]

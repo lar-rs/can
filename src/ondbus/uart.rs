@@ -14,7 +14,20 @@ pub struct Uart<'a> {
     num: u8,
 }
 
-
+pub fn bitrate_num(bitratae: u32) -> u32 {
+    match bitratae{
+        9600   => 0,
+        1200   => 1,
+        2400   => 2,
+        4800   => 3,
+	    9600   => 4,
+	    19200  => 5,
+	    38400  => 6,
+	    57600  => 7,
+        115200 => 8,
+        _ => 4,
+    }
+}
 
 // "com.lar.service.can", "/com/lar/nodes/Analog1", "com.lar.nodes.Analog1", "GetUart1"
 // "com.lar.service.can", "/com/lar/nodes/Analog1", "com.lar.nodes.Analog1", "GetUart2"
@@ -29,7 +42,7 @@ impl<'a> Uart<'a> {
        Uart{conn,node,iface,num}
     }
     pub fn set_bitrate(&self,bitrate:u32) -> Result<(),CanError> {
-        let _ = self.conn.send_with_reply_and_block(Message::new_method_call( "com.lar.service.can", self.node.as_str(),self.iface.as_str(), format!("SetBautrate{}",self.num).as_str()).unwrap().append1(bitrate),2000)?;
+        let _ = self.conn.send_with_reply_and_block(Message::new_method_call( "com.lar.service.can", self.node.as_str(),self.iface.as_str(), format!("SetBautrate{}",self.num).as_str()).unwrap().append1(bitrate_num(bitrate)),2000)?;
         Ok(())
     }
     pub fn read_string(&mut self) -> Result<String,CanError> {
@@ -65,13 +78,11 @@ impl<'a> Write<String> for Uart<'a>  {
         self.write_string(word)?;
         Ok(())
     }
-
     /// Ensures that none of the previously written words are still buffered
     fn flush(&mut self) -> nb::Result<(), Self::Error>{
         Ok(())
     }
 }
-
 
 
 #[cfg(test)]

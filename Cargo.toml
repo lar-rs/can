@@ -46,7 +46,7 @@ chrono = "0.4.10"
 ## value|bit
 bitvec = "0.15.2"
 nom = "5.0.1"
-
+regex= "1.3.1"
 ## Serealizers
 serde = { version = "1.0", default-features = false, features = ["derive"] }
 bincode = "1.2.0"
@@ -58,10 +58,7 @@ dbus="0.7.1"
 ### channels|async|net|static
 crossbeam = "0.7.3"
 lazy_static = "1.4.0"
-async-std  = { version = "1.1.0", features = ["unstable"] }
-async-log  = "2.0.0"
 # futures-preview = {version = "0.3.0-alpha.19", features = ["async-await"], optional = true }
-async-trait = "0.1.19"
 # surf = { git = "https://github.com/rustasync/surf.git" }
 
 ### protocol|jsonrpc
@@ -71,7 +68,8 @@ async-trait = "0.1.19"
 # jsonrpc-core-client = "14.0.3"
 # jsonrpc-tcp-server = "14.0.3"
 # tarpc = "0.19.0"
-
+notify = "4.0.14"
+ctrlc = "3.1.3"
 # nom = "5.0.1"
 # bytes = "0.4.12"
 # serial = "0.4.0"
@@ -79,3 +77,7 @@ async-trait = "0.1.19"
 
 embedded-hal = { version = "0.2.3", features = ["unproven"] }
 nb = "0.1.2"
+
+
+dirs = "2.0.2"
+# mio = { path="../mio"}

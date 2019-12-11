@@ -1,17 +1,45 @@
-use crate::cmd::Cmd;
 // use failure::ResultExt;
-use async_std::io;
+use std::io;
 // use std::io;
-// use std::path::PathBuf;
+use std::path::PathBuf;
 use structopt::StructOpt;
 // use clap_flags::Log;
+use crate::pipe;
+use crate::setup;
 
+// use crate::cli::Args;
+// use clap_flags;
+
+/// 📢 subcommands 
+#[derive(Debug, StructOpt)]
+pub enum Cmd {
+    #[structopt(name = "setup", about = "setup and activate can driver")]
+    Setup(setup::Opt),
+     #[structopt(name = "pipe", about = "run pipe ")]
+    Pipe(pipe::Opt),
+}
+
+
+impl Cmd {
+    pub fn run(&self) -> io::Result<()> {
+        match &self {
+            Cmd::Setup(opt) => opt.run(),
+            Cmd::Pipe(opt) => opt.run(),
+            // Cmd::DBus(opt) => opt.run().await,
+        }
+    }
+}
     
 /// lscan command argument 
 #[derive(Debug, StructOpt)]
 #[structopt(name = "lscan", about = "  🧰 linux socket can command line interface usage.")]
 pub struct Args {
-
+    ///🔧 watch on dir 
+    #[structopt(short = "a", long = "address",  default_value = "tcp:host=192.168.66.59,port=6666")]
+    address: String,
+    ///🔧 watch on dir 
+    #[structopt(short = "d", long = "dir",  default_value = "~/.pwa/mio/ndir")]
+    dir: PathBuf,
    /// 📢 subcommand to run.
     #[structopt(subcommand, about = "📢 subcommand to serve controller or start pipeline directly")]
     cmd: Cmd,
@@ -21,8 +49,8 @@ pub struct Args {
 impl Args {
   /// Access the directory name.
   #[inline]
-  pub async fn command(&self) -> io::Result<()> {
-      self.cmd.run().await
+  pub  fn command(&self) -> io::Result<()> {
+      self.cmd.run()
   }
 }
 
